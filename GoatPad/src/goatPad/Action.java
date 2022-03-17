@@ -2,6 +2,6 @@ package goatPad;
 
 public class Action {
 
-//Some Code 
+//Some Code   
 	
 }
