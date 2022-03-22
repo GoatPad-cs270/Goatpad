@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class Document {
 
+	/**
+	 * Keeps track of all the user inputs.
+	 */
 	ArrayList<String> inputs = new ArrayList<String>();
 	String content = "";
 
