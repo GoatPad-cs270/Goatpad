@@ -12,6 +12,9 @@ public class Document {
 
 	String copiedContent;
 
+	/**
+	 * 
+	 */
 	public Document() {
 
 	}
