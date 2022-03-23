@@ -108,6 +108,17 @@ public class testGoatPad {
 		toolbar.undo(doc);
 		assert (doc.getAllType().equals(""));
 	}
+	
+	@Test
+	public void checkRedo() {
+		toolbar toolbar = new toolbar();
+		Document doc = new Document();
+		String original = "words that exist in the document";
+		doc.setContents(original);
+		toolbar.undo(doc);
+		toolbar.redo(doc);
+		assert (doc.getAllType().equals(original));
+	}
 
 	@Test
 	public void checkSetContents() { // Green
