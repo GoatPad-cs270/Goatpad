@@ -10,10 +10,10 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
-public class printPopUp extends JPanel implements MouseInputListener, KeyListener{
+public class DisplayPanel extends JPanel implements MouseInputListener, KeyListener{
 	
 	//print window class
-	public printPopUp(int width, int height, Color c) {
+	public DisplayPanel(int width, int height, Color c) {
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(c);
 	}
