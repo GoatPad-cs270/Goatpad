@@ -1,6 +1,6 @@
 package goatPad;
 
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 public class dropdown extends JComboBox {
 
@@ -8,11 +8,14 @@ public class dropdown extends JComboBox {
 	public String names;
 
 	public dropdown() {
+		
 		this.addItem("Translate");
 		this.addItem("Import");
 		this.addItem("Export");
 		this.addItem("Print");
 		this.addItem("Save");
+		
+		
 	}
 
 	/**
