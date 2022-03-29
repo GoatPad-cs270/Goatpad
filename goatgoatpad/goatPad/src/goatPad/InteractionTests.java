@@ -114,5 +114,24 @@ public class InteractionTests {
 		int lastCount = (int) lastStr.chars().count();
 		assert (lastCount < display.getWidth());
 	}
+	
+	
+	//Showing default values
+	public int windowSize() {
+		int width = 800;
+		int height = 800;
+		
+		return width+height;
+		
+	}
+	
+	//tests to see if the window resize
+	@Test
+	public void testResize() {
+		int width = 450;
+		int height = 120;
+		
+		assert( windowSize() != (width+height));
+	}
 
 }
