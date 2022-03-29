@@ -50,7 +50,7 @@ public class toolbar {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * undoes the previous single KEYSTROKE action
 	 * 
@@ -58,11 +58,10 @@ public class toolbar {
 	 * @return
 	 */
 	public String undo(Document doc) {
-		if(doc.content == "" || doc.content == null){
+		if (doc.content == "" || doc.content == null) {
 			undo = true;
 			return null;
-		}
-		else {
+		} else {
 			undo = true;
 			undoString = doc.inputs.remove(doc.inputs.size() - 1);
 			doc.content = "";
@@ -72,14 +71,15 @@ public class toolbar {
 			return doc.content;
 		}
 	}
-	
+
 	/**
 	 * Redo's the most recent UNDO performed on the document
+	 * 
 	 * @param doc
 	 * @return
 	 */
 	public String redo(Document doc) {
-		if(undo == true) {
+		if (undo == true) {
 			doc.setContents(undoString);
 			undo = false;
 		}

@@ -2,6 +2,8 @@ package goatPad;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.Color;
+import java.awt.TextArea;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.OutputStream;
@@ -108,7 +110,7 @@ public class testGoatPad {
 		toolbar.undo(doc);
 		assert (doc.getAllType().equals(""));
 	}
-	
+
 	@Test
 	public void checkRedo() {
 		toolbar toolbar = new toolbar();
@@ -191,5 +193,21 @@ public class testGoatPad {
 		int width = display.getWidth();
 		assertEquals(height, display.getHeight());
 		assertEquals(width, display.getWidth());
+	}
+
+	@Test
+	public void checkJTextArea() {
+		DisplayPanel display = new DisplayPanel(100, 100, Color.white);
+		display.textArea.setText("Hello");
+		assertEquals(display.doc.content, display.textArea.getText());
+	}
+
+	@Test
+	public void checkSetContentInputsArrayList() {
+		DisplayPanel display = new DisplayPanel(100, 100, Color.white);
+		display.doc.setContents("Hello");
+		int length = 1;
+		assertEquals(length, display.doc.inputs.size());
+		assertEquals(display.doc.content, display.doc.inputs.get(0));
 	}
 }
