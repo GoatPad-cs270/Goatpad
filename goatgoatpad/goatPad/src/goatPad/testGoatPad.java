@@ -26,7 +26,7 @@ public class testGoatPad {
 		names.add("Print");
 		names.add("Save");
 		toolbar toolbar = new toolbar();
-		dropdown filemenu = toolbar.file;
+		DropDown filemenu = toolbar.file;
 		assertEquals(filemenu.getItemCount(), 5);
 		for (int i = 0; i < filemenu.getItemCount(); i++) {
 			assert (filemenu.getItemAt(i).equals(names.get(i)));
@@ -36,7 +36,7 @@ public class testGoatPad {
 	@Test
 	public void checkSearchNothing() { // Green
 		toolbar toolbar = new toolbar();
-		dropdown filemenu = toolbar.file;
+		DropDown filemenu = toolbar.file;
 		Document doc = new Document();
 		String answer = doc.getHighlight();
 		Pos search = filemenu.search(answer);
@@ -46,7 +46,7 @@ public class testGoatPad {
 	@Test
 	public void checkSearchSomething() { // Green
 		toolbar toolbar = new toolbar();
-		dropdown filemenu = toolbar.file;
+		DropDown filemenu = toolbar.file;
 		Document doc = new Document();
 		String str = "searched string";
 		doc.setContents(str);

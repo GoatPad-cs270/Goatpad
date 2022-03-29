@@ -5,7 +5,7 @@ import java.nio.file.Path;
 
 public class toolbar {
 
-	public dropdown file = new dropdown();
+	public DropDown file = new DropDown();
 
 	/**
 	 * Sets up the names for the dropdown

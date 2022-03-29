@@ -17,7 +17,7 @@ public class InteractionTests {
 	@Test
 	public void SearchInteractionTest() {
 		toolbar toolbar = new toolbar();
-		dropdown filemenu = toolbar.file;
+		DropDown filemenu = toolbar.file;
 		Document doc = new Document();
 		boolean isEqual = false;
 
