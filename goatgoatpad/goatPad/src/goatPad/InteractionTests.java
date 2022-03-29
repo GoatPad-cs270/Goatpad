@@ -2,6 +2,8 @@ package goatPad;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -116,22 +118,18 @@ public class InteractionTests {
 	}
 	
 	
-	//Showing default values
-	public int windowSize() {
-		int width = 800;
-		int height = 800;
-		
-		return width+height;
-		
-	}
+	
 	
 	//tests to see if the window resize
 	@Test
 	public void testResize() {
+		DisplayPanel display1 = new DisplayPanel(800, 800, Color.white);
 		int width = 450;
-		int height = 120;
+		int height = 125;
+		display1.resize(width,height);
+		Dimension floppy = new Dimension(width,height);
 		
-		assert( windowSize() != (width+height));
+		assertEquals( display1.size(), floppy);
 	}
 
 }
