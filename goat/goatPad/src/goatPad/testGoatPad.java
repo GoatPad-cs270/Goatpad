@@ -84,9 +84,9 @@ public class testGoatPad {
 	@Test
 	public void checkTranslate() { // Green
 		toolbar toolbar = new toolbar();
-		String goatEnglish = "BAA";
-		String englishEnglish = toolbar.translate(goatEnglish);
-		assert (englishEnglish.equals("Hello"));
+		String goatEnglish = "BAAAA";
+		String englishEnglish = toolbar.translateToEnglish(goatEnglish);
+		assertEquals(englishEnglish, "Hello");
 	}
 
 	@Test
@@ -180,5 +180,24 @@ public class testGoatPad {
 		int width = display.getWidth();
 		assertEquals(height, display.getHeight());
 		assertEquals(width, display.getWidth());
+	}
+
+	@Test
+	public void EnglishToGoatTest() {
+		String englishVerb = "fruit punch";
+		String goatVerb = "bbrrryawrw/brrybyaawb";
+		toolbar toolbar = new toolbar();
+
+		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
+
+		englishVerb = "Fruit Punch";
+		goatVerb = "BBrrryawrw/BRrybyaawb";
+
+		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
+
+	}
+
+	public void NounTest() {
+
 	}
 }
