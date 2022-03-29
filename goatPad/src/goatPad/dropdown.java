@@ -8,7 +8,6 @@ public class dropdown extends JComboBox {
 	public String names;
 
 	public dropdown() {
-		
 		this.addItem("Translate");
 		this.addItem("Import");
 		this.addItem("Export");

@@ -114,5 +114,9 @@ public class InteractionTests {
 		int lastCount = (int) lastStr.chars().count();
 		assert (lastCount < display.getWidth());
 	}
+	
+	/*
+	 * 
+	 */
 
 }

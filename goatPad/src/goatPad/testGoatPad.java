@@ -181,4 +181,13 @@ public class testGoatPad {
 		assertEquals(height, display.getHeight());
 		assertEquals(width, display.getWidth());
 	}
+	
+	@Test
+	public void checkDropDownPanel() {
+		DropDownPanel drop = new DropDownPanel();
+		dropdown trueDrop = new dropdown();
+		assertEquals(drop.getItemAt(1), trueDrop.getItemAt(1));
+	}
+	
+	
 }
