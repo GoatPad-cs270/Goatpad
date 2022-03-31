@@ -1,3 +1,4 @@
+/*
 package goatPad;
 
 public class Verb {
@@ -33,3 +34,4 @@ public class Verb {
 		return true;
 	}
 }
+*/

@@ -23,7 +23,6 @@ public class DisplayPanel extends JPanel implements MouseInputListener, KeyListe
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -80,5 +79,4 @@ public class DisplayPanel extends JPanel implements MouseInputListener, KeyListe
 		// TODO Auto-generated method stub
 
 	}
-
 }
