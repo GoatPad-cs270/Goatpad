@@ -12,6 +12,7 @@ public class dropdown extends JComboBox {
 		this.addItem("Import");
 		this.addItem("Export");
 		this.addItem("Print");
+		this.addItem("Open");
 		this.addItem("Save");
 		
 		

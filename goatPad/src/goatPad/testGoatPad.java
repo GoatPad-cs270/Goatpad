@@ -2,6 +2,9 @@ package goatPad;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.swing.*;
+
+import java.awt.FlowLayout;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.OutputStream;
@@ -24,10 +27,11 @@ public class testGoatPad {
 		names.add("Import");
 		names.add("Export");
 		names.add("Print");
+		names.add("Open");
 		names.add("Save");
 		toolbar toolbar = new toolbar();
 		dropdown filemenu = toolbar.file;
-		assertEquals(filemenu.getItemCount(), 5);
+		assertEquals(filemenu.getItemCount(), 6);
 		for (int i = 0; i < filemenu.getItemCount(); i++) {
 			assert (filemenu.getItemAt(i).equals(names.get(i)));
 		}
@@ -185,9 +189,29 @@ public class testGoatPad {
 	@Test
 	public void checkDropDownPanel() {
 		DropDownPanel drop = new DropDownPanel();
-		dropdown trueDrop = new dropdown();
-		assertEquals(drop.getItemAt(1), trueDrop.getItemAt(1));
+		JPanel panel = new JPanel();
+		panel.setSize(400, 400);
+		
+		assertEquals(panel.getSize(), drop.getSize());
+		assert(drop.isVisible() == true);
+		
 	}
 	
+	@Test
+	public void checkOpenFile() {
+		toolbar toolbar = new toolbar();
+		JTextArea text = new JTextArea();
+		toolbar.openFile(text);
+		assertEquals(toolbar.response,JFileChooser.APPROVE_OPTION);
+		
+	}
+	
+	@Test
+	public void checkSaveFile() {
+		toolbar toolbar = new toolbar();
+		JTextArea text = new JTextArea();
+		toolbar.saveFile(text);
+		assertEquals(toolbar.response,JFileChooser.APPROVE_OPTION);
+	}
 	
 }
