@@ -2,6 +2,7 @@ package goatPad;
 
 import java.util.ArrayList;
 
+
 public class Document {
 
 	ArrayList<String> inputs = new ArrayList<String>();

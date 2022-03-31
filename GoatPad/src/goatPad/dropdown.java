@@ -16,7 +16,7 @@ public class dropdown extends JComboBox {
 	}
 
 	/**
-	 * searches content of document for inputted word returns position
+	 * searches content of document for in putted word returns position
 	 * 
 	 * @param str
 	 * @return

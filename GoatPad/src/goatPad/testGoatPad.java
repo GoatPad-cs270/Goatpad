@@ -195,19 +195,67 @@ public class testGoatPad {
 		assertEquals(width, display.getWidth());
 	}
 
+	/*
+	 * Tests the JTextArea created in the display to make sure the textArea formated
+	 * correctly which includes the correct width and height, empty textArea to
+	 * start with and also the text of the textArea after adding some content
+	 */
 	@Test
 	public void checkJTextArea() {
 		DisplayPanel display = new DisplayPanel(100, 100, Color.white);
+		assertEquals(display.textArea.getText(), "");
 		display.textArea.setText("Hello");
 		assertEquals(display.doc.content, display.textArea.getText());
+		assertEquals(display.textArea.getWidth(), display.getPreferredSize().width);
+		assertEquals(display.textArea.getHeight(), display.getPreferredSize().height);
 	}
 
+	/*
+	 * Checks whether the input array in the document class inserts the new content
+	 * correctly after the new text is inserted into the document
+	 */
 	@Test
 	public void checkSetContentInputsArrayList() {
 		DisplayPanel display = new DisplayPanel(100, 100, Color.white);
 		display.doc.setContents("Hello");
-		int length = 1;
-		assertEquals(length, display.doc.inputs.size());
+		int numInputs = 1;
+		assertEquals(numInputs, display.doc.inputs.size());
 		assertEquals(display.doc.content, display.doc.inputs.get(0));
+	}
+
+	/**
+	 * Tests if the wrap on/off function works correctly
+	 */
+	@Test
+	public void checkWrapOnOf() {
+		DisplayPanel display = new DisplayPanel(100, 100, Color.white);
+		assertEquals(display.wordWrapOn, false);
+		assertEquals(display.textArea.getLineWrap(), false);
+		display.wordWrapOnOff(display.wordWrapOn);
+		assertEquals(display.wordWrapOn, true);
+	}
+
+	/**
+	 * Tests status bar created in the display and some major parts and formatting
+	 * of the status bar like background color and the width of the bar
+	 */
+	@Test
+	public void checkStatusBar() {
+		DisplayPanel display = new DisplayPanel(100, 100, Color.white);
+		assertEquals(display.getPreferredSize().width, display.statusBar.getPreferredSize().width);
+		assertEquals(display.statusBar.getBackground(), Color.LIGHT_GRAY);
+	}
+
+	/**
+	 * Tests the function that updates the line and column of the current location
+	 * of the cursor.
+	 */
+	@Test
+	public void checkCaretUpdate() {
+		DisplayPanel display = new DisplayPanel(100, 100, Color.white);
+		assertEquals(display.textArea.getCaretPosition(), 0);
+		display.textArea.setText("Hello");
+		display.textArea.setCaretPosition(4);
+		assertEquals(display.textArea.getCaretPosition(), 4);
 	}
 }
