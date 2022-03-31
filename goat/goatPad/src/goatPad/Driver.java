@@ -27,6 +27,14 @@ public class Driver {
 		String englishEnglish = toolbar.translateToEnglish(goatEnglish);
 		System.out.println(englishEnglish);
 
+		goatEnglish = "RBrwarbr";
+		englishEnglish = toolbar.translateToEnglish(goatEnglish);
+		System.out.println(englishEnglish);
+
+		goatEnglish = "AW/wwawybyb/brrybyaawb/bayrbarryyarbyba";
+		englishEnglish = toolbar.translateToEnglish(goatEnglish);
+		System.out.println(englishEnglish);
+
 	}
 
 }

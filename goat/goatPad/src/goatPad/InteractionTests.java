@@ -115,4 +115,44 @@ public class InteractionTests {
 		assert (lastCount < display.getWidth());
 	}
 
+	/**
+	 * Tests translation from English to Goat as well as the private
+	 * handleCharacterChange() function.
+	 * 
+	 */
+	@Test
+	public void EnglishToGoatTest() {
+		// Tests all lowercase input
+		String englishVerb = "fruit punch";
+		String goatVerb = "bbrrryawrw/brrybyaawb";
+		toolbar toolbar = new toolbar();
+
+		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
+
+		// Tests for case sensitivity.
+		englishVerb = "Fruit Punch";
+		goatVerb = "BBrrryawrw/BRrybyaawb";
+
+		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
+
+		// Tests all uppercase input
+		englishVerb = "FRUIT PUNCH";
+		goatVerb = "BBRRRYAWRW/BRRYBYAAWB";
+
+		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
+
+	}
+
+	@Test
+	public void GoatToEnglishTest() {
+		toolbar toolbar = new toolbar();
+
+		String goatEnglish = "AW/wwawybyb/brrybyaawb/bayrbarryyarbyba";
+
+		String english = "I will punch everyone";
+		String englishEnglish = toolbar.translateToEnglish(goatEnglish);
+
+		assertEquals(english, englishEnglish);
+	}
+
 }

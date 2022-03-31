@@ -5,6 +5,8 @@ import java.nio.file.Path;
 
 public class toolbar {
 
+	private boolean hasPartner = false;
+
 	public dropdown file = new dropdown();
 
 	/**
@@ -30,40 +32,45 @@ public class toolbar {
 
 	}
 
+	/**
+	 * Translates Goat English into standard English
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public String translateToEnglish(String str) {
 		String temp = str;
 		temp = temp.toLowerCase();
+
+		// Add ability to read whether word is capitalized or not.
 		if (temp.equals("baaaa")) {
 			return "Hello";
 		} else {
 			String newString = "";
-			char[] letters = str.toCharArray();
-			for (char letter : letters) {
-				newString += handleGoatCharacterChange(letter);
+			for (int i = 0; i < str.length(); i++) {
+				if (i != str.length() - 1) {
+					newString += handleGoatCharacterChange(str.charAt(i), str.charAt(i + 1));
+				} else {
+					newString += handleGoatCharacterChange(str.charAt(i), ' ');
+				}
+
+				if (getHasPartner() == true) {
+					i++;
+				}
 			}
+
 			return newString;
 		}
 
 	}
 
 	/**
-	 * translate English to Goat English
+	 * Translates standard English text into Goat English
 	 * 
-	 * @param str
+	 * @param str English text to be translated into Goat.
 	 * @return
 	 */
 	public String translateToGoat(String str) {
-//		
-//		if (str == "BAA") {
-//			return "Hello";
-//		} else if (str == "BABAAA") {
-//			return "sad";
-//		}
-//
-//		if (str == "sad" || str == "Sad") {
-//			return "BABAAA";
-//		}
-
 		String newString = "";
 		char[] letters = str.toCharArray();
 
@@ -113,7 +120,13 @@ public class toolbar {
 
 	}
 
-	public String handleCharacterChange(char c) {
+	/**
+	 * Takes in char s
+	 * 
+	 * @param c
+	 * @return
+	 */
+	private String handleCharacterChange(char c) {
 		String returnVal = "";
 		boolean isLower = Character.isLowerCase(c);
 		char temp = c;
@@ -206,92 +219,130 @@ public class toolbar {
 
 	}
 
-	private String handleGoatCharacterChange(char c) {
-		String returnVal = "";
-		boolean isLower = Character.isLowerCase(c);
-		char temp = c;
-
-		Character.toLowerCase(temp);
-
-		switch (temp) {
-//		case 'aa':
-//			returnVal = "a";
-//			break;
-//		case 'ab':
-//			returnVal = "b";
-//			break;
-//		case 'ba':
-//			returnVal = "ba";
-//			break;
-//		case 'bb':
-//			returnVal = "bb";
-//			break;
-//		case 'wa':
-//			returnVal = "wa";
-//			break;
-//		case 'wb':
-//			returnVal = "wb";
-//			break;
-//		case 'aw':
-//			returnVal = "aw";
-//			break;
-//		case 'bw':
-//			returnVal = "bw";
-//			break;
-//		case 'ya':
-//			returnVal = "ya";
-//			break;
-//		case 'yb':
-//			returnVal = "yb";
-//			break;
-//		case 'ay':
-//			returnVal = "ay";
-//			break;
-//		case 'by':
-//			returnVal = "by";
-//			break;
-//		case 'ar':
-//			returnVal = "ar";
-//			break;
-//		case 'br':
-//			returnVal = "br";
-//			break;
-//		case 'ra':
-//			returnVal = "ra";
-//			break;
-//		case 'rr':
-//			returnVal = "rr";
-//			break;
-//		case 'rb':
-//			returnVal = "rb";
-//			break;
-//		case 'rw':
-//			returnVal = "rw";
-//			break;
-//		case 'ry':
-//			returnVal = "ry";
-//			break;
-//		case 'yr':
-//			returnVal = "yr";
-//			break;
-//		case 'ww':
-//			returnVal = "ww";
-//			break;
-//		case 'wy':
-//			returnVal = "wy";
-//			break;
-//		case 'yy':
-//			returnVal = "yy";
-//			break;
-//		case 'yw':
-//			returnVal = "yw";
-//			break;
-//		case '/':
-//			returnVal = " ";
-//			break;
+	/**
+	 * Takes a
+	 * 
+	 * @param c
+	 * @return
+	 */
+	private char handleGoatCharacterChange(char c, char partnerC) {
+		setHasPartner(false);
+		if (c == ' ') {
+			return ' ';
 		}
 
-		return returnVal;
+		char returnVal = ' ';
+		boolean isLower = Character.isLowerCase(c);
+
+		char temp = c;
+		char temp2 = partnerC;
+
+		temp = Character.toLowerCase(temp);
+		temp2 = Character.toLowerCase(temp2);
+
+		switch (temp) {
+		case 'w':
+			if (temp2 == 'a') {
+				returnVal = 'g';
+			} else if (temp2 == 'b') {
+				returnVal = 'h';
+			} else if (temp2 == 'w') {
+				returnVal = 'w';
+			} else if (temp2 == 'y') {
+				returnVal = 'x';
+			}
+
+			setHasPartner(true);
+			break;
+
+		case 'y':
+			if (temp2 == 'a') {
+				returnVal = 'k';
+			} else if (temp2 == 'b') {
+				returnVal = 'l';
+			} else if (temp2 == 'r') {
+				returnVal = 'v';
+			} else if (temp2 == 'y') {
+				returnVal = 'y';
+			} else if (temp2 == 'w') {
+				returnVal = 'z';
+			}
+
+			setHasPartner(true);
+			break;
+		case 'r':
+			if (temp2 == 'a') {
+				returnVal = 'q';
+			} else if (temp2 == 'r') {
+				returnVal = 'r';
+			} else if (temp2 == 'b') {
+				returnVal = 's';
+			} else if (temp2 == 'w') {
+				returnVal = 't';
+			} else if (temp2 == 'y') {
+				returnVal = 'u';
+			}
+
+			setHasPartner(true);
+			break;
+		case 'a':
+			if (temp2 == 'a') {
+				returnVal = 'c';
+				setHasPartner(true);
+			} else if (temp2 == 'b') {
+				returnVal = 'd';
+				setHasPartner(true);
+			} else if (temp2 == 'y') {
+				returnVal = 'm';
+				setHasPartner(true);
+			} else if (temp2 == 'r') {
+				returnVal = 'o';
+				setHasPartner(true);
+			} else if (temp2 == 'w') {
+				returnVal = 'i';
+				setHasPartner(true);
+			} else {
+				returnVal = 'a';
+			}
+			break;
+		case 'b':
+			if (temp2 == 'a') {
+				returnVal = 'e';
+				setHasPartner(true);
+			} else if (temp2 == 'b') {
+				returnVal = 'f';
+				setHasPartner(true);
+			} else if (temp2 == 'w') {
+				returnVal = 'j';
+				setHasPartner(true);
+			} else if (temp2 == 'y') {
+				returnVal = 'n';
+				setHasPartner(true);
+			} else if (temp2 == 'r') {
+				returnVal = 'p';
+				setHasPartner(true);
+			} else {
+				returnVal = 'b';
+			}
+			break;
+		case '/':
+			returnVal = ' ';
+			break;
+		}
+
+		if (isLower) {
+			return Character.toLowerCase(returnVal);
+		} else {
+			return Character.toUpperCase(returnVal);
+		}
+	}
+
+	protected void setHasPartner(boolean bool) {
+		hasPartner = bool;
+	}
+
+	protected boolean getHasPartner() {
+		return hasPartner;
 	}
 
 }

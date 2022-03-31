@@ -182,21 +182,6 @@ public class testGoatPad {
 		assertEquals(width, display.getWidth());
 	}
 
-	@Test
-	public void EnglishToGoatTest() {
-		String englishVerb = "fruit punch";
-		String goatVerb = "bbrrryawrw/brrybyaawb";
-		toolbar toolbar = new toolbar();
-
-		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
-
-		englishVerb = "Fruit Punch";
-		goatVerb = "BBrrryawrw/BRrybyaawb";
-
-		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
-
-	}
-
 	public void NounTest() {
 
 	}
