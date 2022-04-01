@@ -6,9 +6,11 @@ import java.nio.file.Path;
 public class toolbar {
 
 	public dropdown file = new dropdown();
+	boolean undo = false;
+	String undoString = "";
 
 	/**
-	 * Sets up the names for the dropdown
+	 * Sets up the names for the drop down
 	 * 
 	 **/
 	public toolbar() {
@@ -56,15 +58,32 @@ public class toolbar {
 	 * @return
 	 */
 	public String undo(Document doc) {
-		// Can make a better undo function, but this is one of the only ways to allow
-		// the test to pass.
-		doc.inputs.remove(doc.inputs.size() - 1);
-		doc.content = "";
-		for (String input : doc.inputs) {
-			doc.content += input;
+		if (doc.content == "" || doc.content == null) {
+			undo = true;
+			return null;
+		} else {
+			undo = true;
+			undoString = doc.inputs.remove(doc.inputs.size() - 1);
+			doc.content = "";
+			for (String input : doc.inputs) {
+				doc.content += input;
+			}
+			return doc.content;
+		}
+	}
+
+	/**
+	 * Redo's the most recent UNDO performed on the document
+	 * 
+	 * @param doc
+	 * @return
+	 */
+	public String redo(Document doc) {
+		if (undo == true) {
+			doc.setContents(undoString);
+			undo = false;
 		}
 		return doc.content;
-
 	}
 
 	/**
@@ -75,16 +94,6 @@ public class toolbar {
 	 */
 	public String getContents(File file) {
 		return file.toString();
-
-	}
-
-	/**
-	 * Sets document contents from a different documents
-	 * 
-	 * @param contents
-	 */
-	public void setContents(Document contents) {
-		// TODO Auto-generated method stub
 
 	}
 

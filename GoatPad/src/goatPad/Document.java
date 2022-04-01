@@ -1,11 +1,12 @@
 package goatPad;
 
-
 import java.util.ArrayList;
+
 
 public class Document {
 
 	ArrayList<String> inputs = new ArrayList<String>();
+	String currentInput;
 	String content = "";
 
 	String copiedContent;
@@ -22,6 +23,7 @@ public class Document {
 	public String getHighlight() {
 		return content;
 	}
+
 
 	/**
 	 * tracks last input to undo/re-do
@@ -55,7 +57,7 @@ public class Document {
 	 * clears document
 	 */
 	public void clear() {
-
+		this.content = "";
 	}
 
 	/**
@@ -68,12 +70,23 @@ public class Document {
 	}
 
 	/**
-	 * adds content to the document
+	 * adds content to the document and add the added string to the inputs array
+	 * which will allow to perform undo
 	 * 
 	 * @param string
 	 */
 	public void setContents(String string) {
-		inputs.add(string);
+		if (inputs.isEmpty() == true) {
+			currentInput = string;
+			inputs.add(string);
+		} else {
+			for (int i = 0; i < string.length(); i++) {
+				if (currentInput.length() == i) {
+					inputs.add(string.substring(i));
+					currentInput += string.substring(i);
+				}
+			}
+		}
 		content += string;
 	}
 
@@ -109,7 +122,7 @@ public class Document {
 	 * @param contents
 	 */
 	public void setContents(Document contents) {
-		// TODO Auto-generated method stub
+		this.content = contents.content;
 
 	}
 }
