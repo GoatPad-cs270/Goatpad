@@ -10,7 +10,7 @@ public class toolbar {
 	String undoString = "";
 
 	/**
-	 * Sets up the names for the dropdown
+	 * Sets up the names for the drop down
 	 * 
 	 **/
 	public toolbar() {
@@ -94,16 +94,6 @@ public class toolbar {
 	 */
 	public String getContents(File file) {
 		return file.toString();
-
-	}
-
-	/**
-	 * Sets document contents from a different documents
-	 * 
-	 * @param contents
-	 */
-	public void setContents(Document contents) {
-		// TODO Auto-generated method stub
 
 	}
 

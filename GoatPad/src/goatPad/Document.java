@@ -24,6 +24,7 @@ public class Document {
 		return content;
 	}
 
+
 	/**
 	 * tracks last input to undo/re-do
 	 * 
@@ -121,7 +122,7 @@ public class Document {
 	 * @param contents
 	 */
 	public void setContents(Document contents) {
-		// TODO Auto-generated method stub
+		this.content = contents.content;
 
 	}
 }

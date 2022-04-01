@@ -31,12 +31,12 @@ public class DisplayPanel extends JPanel implements MouseInputListener, KeyListe
 
 	JButton undoButton = new JButton("Undo");
 	JButton redoButton = new JButton("Redo");
-	JButton wordWrap = new JButton("Word Wrap On/Off");
 
 	JPanel statusBar = new JPanel();
 	JLabel status = new JLabel();
 
-	boolean wordWrapOn = false;
+	boolean wordWrapOn = true;
+	int currentLine, currentCol;
 
 	public DisplayPanel(int width, int height, Color c) {
 		this.setPreferredSize(new Dimension(width, height));
@@ -48,11 +48,9 @@ public class DisplayPanel extends JPanel implements MouseInputListener, KeyListe
 
 		undoButton.setBounds(5, 5, 100, 30);
 		redoButton.setBounds(110, 5, 100, 30);
-		wordWrap.setBounds(215, 5, 150, 30);
 
 		undoButton.addMouseListener(this);
 		redoButton.addMouseListener(this);
-		wordWrap.addMouseListener(this);
 
 		// Creates a status bar which has line and column number of the current caret
 		// location
@@ -62,6 +60,7 @@ public class DisplayPanel extends JPanel implements MouseInputListener, KeyListe
 		statusBar.add(status);
 		statusBar.setBackground(Color.LIGHT_GRAY);
 		status.setText("Line:  Col: ");
+		this.wordWrapOnOff(wordWrapOn);
 
 		// Creates a listener that listens to movement by the caret
 		textArea.addCaretListener(new CaretListener() {
@@ -75,7 +74,6 @@ public class DisplayPanel extends JPanel implements MouseInputListener, KeyListe
 					int caretPos = textArea.getCaretPosition();
 					lineNum = textArea.getLineOfOffset(caretPos);
 					columnNum = caretPos - textArea.getLineStartOffset(lineNum);
-
 					lineNum += 1;
 
 				} catch (BadLocationException e1) {
@@ -183,26 +181,6 @@ public class DisplayPanel extends JPanel implements MouseInputListener, KeyListe
 			toolbar.undo(doc);
 			textArea.setText(doc.content);
 		}
-
-		/*
-		 * If the wordWrap button is pressed and wordWrapOn variable was true, it will
-		 * turn word wrap function on, and off otherwise. Each time the wordWrap button
-		 * is pressed the wordWrapOn variable will change from true to false and back to
-		 * true. This will make the word Wrap button to turn on and off the
-		 * wordWrapping.
-		 * 
-		 */
-		if (wordWrap.contains(input.getPoint())) {
-			if (wordWrapOn == true) {
-				textArea.setLineWrap(true);
-				textArea.setWrapStyleWord(true);
-				wordWrapOn = !wordWrapOn;
-			} else {
-				textArea.setLineWrap(false);
-				textArea.setWrapStyleWord(false);
-				wordWrapOn = !wordWrapOn;
-			}
-		}
 	}
 
 	/**
@@ -232,5 +210,47 @@ public class DisplayPanel extends JPanel implements MouseInputListener, KeyListe
 	 */
 	private void updateLineAndCol(int lineNum, int columnNum) {
 		status.setText("Line: " + lineNum + " Column: " + columnNum);
+		currentLine = lineNum;
+		currentCol = columnNum;
+	}
+
+	/**
+	 * Searches for a given string and returns the position of the string in the
+	 * document
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public Pos search(String str) {
+
+		int startIndex = textArea.getText().indexOf(str);
+		if (startIndex == -1) {
+			System.out.println("The given string is not found!");
+			return null;
+		}
+		
+		else {
+			int endCaretPos = startIndex + str.length();
+			Pos p = new Pos(startIndex + 1, endCaretPos);
+			return p;
+		}
+	}
+
+	/**
+	 * Searches for a given string, when found
+	 * 
+	 * @param s
+	 * @param str
+	 */
+	public void searchAndReplace(String s, String str) {
+		int startIndex = textArea.getText().indexOf(s);
+		if (startIndex == -1) {
+			System.out.println("The given string is not found!");
+		}
+		else {
+			int endCaretPos = startIndex + s.length();
+			textArea.select(startIndex, endCaretPos);
+			textArea.replaceSelection(str);
+		}
 	}
 }
