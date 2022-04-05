@@ -23,6 +23,9 @@ public class Driver {
 		englishVerb = "Fruit Punch";
 		System.out.println(toolbar.translateToGoat(englishVerb));
 
+		englishVerb = "The quick brown fox jumps over the lazy dog";
+		System.out.println(toolbar.translateToGoat(englishVerb));
+
 		String goatEnglish = "BAAAA";
 		String englishEnglish = toolbar.translateToEnglish(goatEnglish);
 		System.out.println(englishEnglish);
@@ -31,10 +34,17 @@ public class Driver {
 		englishEnglish = toolbar.translateToEnglish(goatEnglish);
 		System.out.println(englishEnglish);
 
+		englishEnglish = toolbar.translateToEnglish(goatEnglish);
+		System.out.println(englishEnglish);
+
 		goatEnglish = "AW/wwawybyb/brrybyaawb/bayrbarryyarbyba";
 		englishEnglish = toolbar.translateToEnglish(goatEnglish);
 		System.out.println(englishEnglish);
 
+		String englishText = "This will revolutionize the LLGHS community!";
+		String goatText = "RWwbawrb/wwawybyb/rrbayrarybryrwawarbyawywba/rwwbba/YBYBWAWBRB/aaarayayrybyawrwyy";
+		System.out.println(toolbar.translateToEnglish(goatText));
+		System.out.println(toolbar.translateToGoat(englishText));
 	}
 
 }

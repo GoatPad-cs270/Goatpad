@@ -142,7 +142,6 @@ public class testGoatPad {
 		String actualOutput = os.toString();
 		String expectedOutput = items;
 		assertEquals(actualOutput, expectedOutput);
-
 	}
 
 	public void CheckminimizeWindow() {
@@ -172,6 +171,7 @@ public class testGoatPad {
 		assert (words.equals(str));
 	}
 
+	@Test
 	public void CheckmaximizeWindow() {
 		Window display = new Window(0, 0);
 		display.setHeight(display.getHeight());
@@ -182,7 +182,19 @@ public class testGoatPad {
 		assertEquals(width, display.getWidth());
 	}
 
-	public void NounTest() {
+	@Test
+	public void checkDocumentTranslation() {
+		Document doc = new Document();
+		String englishText = "This will revolutionize the LLGHS community!";
+		String goatText = "RWwbawrb/wwawybyb/rrbayrarybryrwawarbyawywba/rwwbba/YBYBWAWBRB/aaarayayrybyawrwyy";
 
+		doc.setContents(englishText);
+		doc.translateContentToGoat();
+
+		assertEquals(doc.content, goatText);
+
+		doc.translateContentToEnglish();
+
+		assertEquals(doc.content, englishText);
 	}
 }

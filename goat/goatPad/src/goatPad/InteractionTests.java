@@ -123,23 +123,28 @@ public class InteractionTests {
 	@Test
 	public void EnglishToGoatTest() {
 		// Tests all lowercase input
-		String englishVerb = "fruit punch";
-		String goatVerb = "bbrrryawrw/brrybyaawb";
+		String englishWord = "fruit punch";
+		String goatWord = "bbrrryawrw/brrybyaawb";
 		toolbar toolbar = new toolbar();
 
-		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
+		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
 
 		// Tests for case sensitivity.
-		englishVerb = "Fruit Punch";
-		goatVerb = "BBrrryawrw/BRrybyaawb";
+		englishWord = "Fruit Punch";
+		goatWord = "BBrrryawrw/BRrybyaawb";
 
-		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
+		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
 
 		// Tests all uppercase input
-		englishVerb = "FRUIT PUNCH";
-		goatVerb = "BBRRRYAWRW/BRRYBYAAWB";
+		englishWord = "FRUIT PUNCH";
+		goatWord = "BBRRRYAWRW/BRRYBYAAWB";
 
-		assertEquals(goatVerb, toolbar.translateToGoat(englishVerb));
+		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
+
+		englishWord = "The quick brown fox jumps over the lazy dog";
+		goatWord = "RWwbba/raryawaaya/brrarwwby/bbarwy/bwryaybrrb/aryrbarr/rwwbba/ybaywyy/abarwa";
+
+		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
 
 	}
 

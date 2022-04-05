@@ -7,6 +7,8 @@ public class toolbar {
 
 	private boolean hasPartner = false;
 
+	private boolean hasSpace = false;
+
 	public dropdown file = new dropdown();
 
 	/**
@@ -34,6 +36,8 @@ public class toolbar {
 
 	/**
 	 * Translates Goat English into standard English
+	 * {@link #handleGoatCharacterChange(char, char)}:
+	 * 
 	 * 
 	 * @param str
 	 * @return
@@ -49,7 +53,10 @@ public class toolbar {
 			String newString = "";
 			for (int i = 0; i < str.length(); i++) {
 				if (i != str.length() - 1) {
-					newString += handleGoatCharacterChange(str.charAt(i), str.charAt(i + 1));
+					char c = handleGoatCharacterChange(str.charAt(i), str.charAt(i + 1));
+					if (!hasSpace) {
+						newString += c;
+					}
 				} else {
 					newString += handleGoatCharacterChange(str.charAt(i), ' ');
 				}
@@ -121,9 +128,10 @@ public class toolbar {
 	}
 
 	/**
-	 * Takes in char s
+	 * Transliterates the passed in character into its goat English equivalent. Also
+	 * handles case sensitivity.
 	 * 
-	 * @param c
+	 * @param c Character that will be transliterated into goat English
 	 * @return
 	 */
 	private String handleCharacterChange(char c) {
@@ -134,6 +142,12 @@ public class toolbar {
 		temp = Character.toLowerCase(temp);
 
 		switch (temp) {
+		case 'a':
+			returnVal = "a";
+			break;
+		case 'b':
+			returnVal = "b";
+			break;
 		case 'c':
 			returnVal = "aa";
 			break;
@@ -220,22 +234,28 @@ public class toolbar {
 	}
 
 	/**
-	 * Takes a
+	 * Takes in a character and the subsequent character and transliterates the goat
+	 * English character combination into a standard English letter
 	 * 
-	 * @param c
+	 * @param character First character in the letter combination
+	 * @param nextChar  The character that comes directly after the first character
+	 *                  parameter in the String
 	 * @return
 	 */
-	private char handleGoatCharacterChange(char c, char partnerC) {
+	// Consider changing partnerChar to subsequentChar or nextChar
+	private char handleGoatCharacterChange(char character, char nextChar) {
+		hasSpace = false;
 		setHasPartner(false);
-		if (c == ' ') {
+		if (character == ' ') {
 			return ' ';
 		}
 
 		char returnVal = ' ';
-		boolean isLower = Character.isLowerCase(c);
+		boolean isLower = Character.isLowerCase(character);
 
-		char temp = c;
-		char temp2 = partnerC;
+		// inputIsLowerCase
+		char temp = character;
+		char temp2 = nextChar;
 
 		temp = Character.toLowerCase(temp);
 		temp2 = Character.toLowerCase(temp2);
@@ -327,6 +347,10 @@ public class toolbar {
 			break;
 		case '/':
 			returnVal = ' ';
+			break;
+		case ' ':
+			returnVal = ' ';
+			hasSpace = true;
 			break;
 		}
 
