@@ -84,9 +84,9 @@ public class testGoatPad {
 	@Test
 	public void checkTranslate() { // Green
 		toolbar toolbar = new toolbar();
-		String goatEnglish = "BAA";
-		String englishEnglish = toolbar.translate(goatEnglish);
-		assert (englishEnglish.equals("Hello"));
+		String goatEnglish = "BAAAA";
+		String englishEnglish = toolbar.translateToEnglish(goatEnglish);
+		assertEquals(englishEnglish, "Hello");
 	}
 
 	@Test
@@ -142,7 +142,6 @@ public class testGoatPad {
 		String actualOutput = os.toString();
 		String expectedOutput = items;
 		assertEquals(actualOutput, expectedOutput);
-
 	}
 
 	public void CheckminimizeWindow() {
@@ -172,6 +171,7 @@ public class testGoatPad {
 		assert (words.equals(str));
 	}
 
+	@Test
 	public void CheckmaximizeWindow() {
 		Window display = new Window(0, 0);
 		display.setHeight(display.getHeight());
@@ -180,5 +180,21 @@ public class testGoatPad {
 		int width = display.getWidth();
 		assertEquals(height, display.getHeight());
 		assertEquals(width, display.getWidth());
+	}
+
+	@Test
+	public void checkDocumentTranslation() {
+		Document doc = new Document();
+		String englishText = "This will revolutionize the LLGHS community!";
+		String goatText = "RWwbawrb/wwawybyb/rrbayrarybryrwawarbyawywba/rwwbba/YBYBWAWBRB/aaarayayrybyawrwyy";
+
+		doc.setContents(englishText);
+		doc.translateContentToGoat();
+
+		assertEquals(doc.content, goatText);
+
+		doc.translateContentToEnglish();
+
+		assertEquals(doc.content, englishText);
 	}
 }

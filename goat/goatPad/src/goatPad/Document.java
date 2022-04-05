@@ -8,10 +8,18 @@ public class Document {
 	 * Keeps track of all the user inputs.
 	 */
 	ArrayList<String> inputs = new ArrayList<String>();
+
+	/**
+	 * Contains all the content (words, spaces, etc.) of the Document as a String
+	 */
 	String content = "";
 
 	String copiedContent;
+	toolbar toolbar = new toolbar();
 
+	/**
+	 * 
+	 */
 	public Document() {
 
 	}
@@ -114,4 +122,19 @@ public class Document {
 		// TODO Auto-generated method stub
 
 	}
+
+	/**
+	 * Translates the content of the Document from Standard English to Goat English.
+	 */
+	public void translateContentToGoat() {
+		content = toolbar.translateToGoat(content);
+	}
+
+	/**
+	 * Translates the content of the Document from Goat English to Standard English.
+	 */
+	public void translateContentToEnglish() {
+		content = toolbar.translateToEnglish(content);
+	}
+
 }
