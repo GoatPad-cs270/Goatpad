@@ -10,12 +10,19 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
+
+
 public class DisplayPanel extends JPanel implements MouseInputListener, KeyListener{
+	private boolean control = false;
+	private boolean pushinP = false;
 	
 	//print window class
 	public DisplayPanel(int width, int height, Color c) {
+		//attempt to make ctrl p a command to open this window up
+		if(control == true && pushinP == true) {
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(c);
+		}
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -79,7 +86,9 @@ public class DisplayPanel extends JPanel implements MouseInputListener, KeyListe
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL) control = true;
+		if (e.getKeyCode() == KeyEvent.VK_P) pushinP = true;
+		
 	}
 
 }

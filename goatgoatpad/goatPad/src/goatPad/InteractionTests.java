@@ -18,7 +18,7 @@ public class InteractionTests {
 	 */
 	@Test
 	public void SearchInteractionTest() {
-		toolbar toolbar = new toolbar();
+		Toolbar toolbar = new Toolbar();
 		DropDown filemenu = toolbar.file;
 		Document doc = new Document();
 		boolean isEqual = false;
@@ -56,7 +56,7 @@ public class InteractionTests {
 	 */
 	@Test
 	public void InetgrationTestLoadFile() {
-		toolbar toolbar = new toolbar();
+		Toolbar toolbar = new Toolbar();
 		Path path = Paths.get("CS270.txt");
 		File file = toolbar.loadFile(path);
 		assertEquals(path.toString(), file.getPath().toString());
@@ -72,7 +72,7 @@ public class InteractionTests {
 	@Test
 	public void IntHighLightAndTranslate() {
 		Document doc = new Document();
-		toolbar toolbar = new toolbar();
+		Toolbar toolbar = new Toolbar();
 		String goatEnglish = "BABAAA";
 		doc.setContents("BABAAA");
 		Pos x1 = new Pos(0, 8);

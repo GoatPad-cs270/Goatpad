@@ -3,7 +3,7 @@ package goatPad;
 import java.io.File;
 import java.nio.file.Path;
 
-public class toolbar {
+public class Toolbar {
 
 	public DropDown file = new DropDown();
 
@@ -11,7 +11,7 @@ public class toolbar {
 	 * Sets up the names for the dropdown
 	 * 
 	 **/
-	public toolbar() {
+	public Toolbar() {
 
 	}
 
