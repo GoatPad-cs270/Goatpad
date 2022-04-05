@@ -1,6 +1,6 @@
 package goatPad;
 
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 public class dropdown extends JComboBox {
 
@@ -8,11 +8,24 @@ public class dropdown extends JComboBox {
 	public String names;
 
 	public dropdown() {
-		this.addItem("Translate");
+		this.addItem("Translate To English");
+		this.addItem("Translate To Goat");
 		this.addItem("Import");
 		this.addItem("Export");
 		this.addItem("Print");
+		this.addItem("Open");
 		this.addItem("Save");
+		
+	}
+
+	/**
+	 * searches content of document for inputted word returns position
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public Pos search(String str) {
+		return null;
 	}
 
 	/**
@@ -39,4 +52,7 @@ public class dropdown extends JComboBox {
 	public Pos[] searchAll(String str) {
 		return null;
 	}
+	
+	
+	
 }
