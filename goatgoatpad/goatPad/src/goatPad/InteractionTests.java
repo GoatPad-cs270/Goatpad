@@ -2,6 +2,8 @@ package goatPad;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,8 +18,8 @@ public class InteractionTests {
 	 */
 	@Test
 	public void SearchInteractionTest() {
-		toolbar toolbar = new toolbar();
-		dropdown filemenu = toolbar.file;
+		Toolbar toolbar = new Toolbar();
+		DropDown filemenu = toolbar.file;
 		Document doc = new Document();
 		boolean isEqual = false;
 
@@ -54,7 +56,7 @@ public class InteractionTests {
 	 */
 	@Test
 	public void InetgrationTestLoadFile() {
-		toolbar toolbar = new toolbar();
+		Toolbar toolbar = new Toolbar();
 		Path path = Paths.get("CS270.txt");
 		File file = toolbar.loadFile(path);
 		assertEquals(path.toString(), file.getPath().toString());
@@ -70,7 +72,7 @@ public class InteractionTests {
 	@Test
 	public void IntHighLightAndTranslate() {
 		Document doc = new Document();
-		toolbar toolbar = new toolbar();
+		Toolbar toolbar = new Toolbar();
 		String goatEnglish = "BABAAA";
 		doc.setContents("BABAAA");
 		Pos x1 = new Pos(0, 8);
@@ -113,6 +115,21 @@ public class InteractionTests {
 		String lastStr = strings.get(strings.size() - 1);
 		int lastCount = (int) lastStr.chars().count();
 		assert (lastCount < display.getWidth());
+	}
+	
+	
+	
+	
+	//tests to see if the window resize
+	@Test
+	public void testResize() {
+		DisplayPanel display1 = new DisplayPanel(800, 800, Color.white);
+		int width = 450;
+		int height = 125;
+		display1.resize(width,height);
+		Dimension floppy = new Dimension(width,height);
+		
+		assertEquals( display1.size(), floppy);
 	}
 
 }

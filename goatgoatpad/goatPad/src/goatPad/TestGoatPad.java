@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-public class testGoatPad {
+public class TestGoatPad {
 
 	/*
 	 * Translate Import Export Print Save
@@ -25,8 +25,8 @@ public class testGoatPad {
 		names.add("Export");
 		names.add("Print");
 		names.add("Save");
-		toolbar toolbar = new toolbar();
-		dropdown filemenu = toolbar.file;
+		Toolbar toolbar = new Toolbar();
+		DropDown filemenu = toolbar.file;
 		assertEquals(filemenu.getItemCount(), 5);
 		for (int i = 0; i < filemenu.getItemCount(); i++) {
 			assert (filemenu.getItemAt(i).equals(names.get(i)));
@@ -35,8 +35,8 @@ public class testGoatPad {
 
 	@Test
 	public void checkSearchNothing() { // Green
-		toolbar toolbar = new toolbar();
-		dropdown filemenu = toolbar.file;
+		Toolbar toolbar = new Toolbar();
+		DropDown filemenu = toolbar.file;
 		Document doc = new Document();
 		String answer = doc.getHighlight();
 		Pos search = filemenu.search(answer);
@@ -45,8 +45,8 @@ public class testGoatPad {
 
 	@Test
 	public void checkSearchSomething() { // Green
-		toolbar toolbar = new toolbar();
-		dropdown filemenu = toolbar.file;
+		Toolbar toolbar = new Toolbar();
+		DropDown filemenu = toolbar.file;
 		Document doc = new Document();
 		String str = "searched string";
 		doc.setContents(str);
@@ -65,7 +65,7 @@ public class testGoatPad {
 
 	@Test
 	public void checkLoadFileWrongPath() { // Green
-		toolbar toolbar = new toolbar();
+		Toolbar toolbar = new Toolbar();
 		Path path = Paths.get("does-not-exist.txt");
 		File file = toolbar.loadFile(path);
 		assertEquals(file, null);
@@ -73,7 +73,7 @@ public class testGoatPad {
 
 	@Test
 	public void checkLoadFileCorrectPath() {
-		toolbar toolbar = new toolbar();
+		Toolbar toolbar = new Toolbar();
 		Path path = Paths.get("does-exist.txt");
 		File file = toolbar.loadFile(path);
 		// Another change. Before it compared the Path object itself to a String of the
@@ -83,7 +83,7 @@ public class testGoatPad {
 
 	@Test
 	public void checkTranslate() { // Green
-		toolbar toolbar = new toolbar();
+		Toolbar toolbar = new Toolbar();
 		String goatEnglish = "BAA";
 		String englishEnglish = toolbar.translate(goatEnglish);
 		assert (englishEnglish.equals("Hello"));
@@ -102,7 +102,7 @@ public class testGoatPad {
 
 	@Test
 	public void checkUndo() {
-		toolbar toolbar = new toolbar();
+		Toolbar toolbar = new Toolbar();
 		Document doc = new Document();
 		doc.setContents("words that exist in the document");
 		toolbar.undo(doc);
