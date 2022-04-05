@@ -2,6 +2,7 @@ package goatPad;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.Color;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -67,19 +68,19 @@ public class InteractionTests {
 	 * highlighted string Translates the highlighted string
 	 * 
 	 */
-	@Test
-	public void IntHighLightAndTranslate() {
-		Document doc = new Document();
-		toolbar toolbar = new toolbar();
-		String goatEnglish = "BABAAA";
-		doc.setContents("BABAAA");
-		Pos x1 = new Pos(0, 8);
-		Pos x2 = new Pos(32, 8);
-		String highlighted = doc.highlightString(x1, x2); // each character is 8 pixels
-		assertEquals(highlighted, goatEnglish);
-		String english = toolbar.translate("Sad"); // Sets the word for BABAAA to sad
-		assertEquals(english, goatEnglish);
-	}
+	//@Test
+	//public void IntHighLightAndTranslate() {
+		//Document doc = new Document();
+		//toolbar toolbar = new toolbar();
+		//String goatEnglish = "BABAAA";
+		//doc.setContents("BABAAA");
+		//Pos x1 = new Pos(0, 8);
+		//Pos x2 = new Pos(32, 8);
+		//String highlighted = doc.highlightString(x1, x2); // each character is 8 pixels
+		//assertEquals(highlighted, goatEnglish);
+		//String english = toolbar.translate("Sad"); // Sets the word for BABAAA to sad
+		//assertEquals(english, goatEnglish);
+	//}
 
 	/*
 	 * checks that test string is wrapped when window is made smaller
@@ -115,8 +116,14 @@ public class InteractionTests {
 		assert (lastCount < display.getWidth());
 	}
 	
-	/*
-	 * 
+	/**
+	 * Tests to see if the action listener in the dropdown menu functions.
+	 * Also checks to make sure that the functions are actually called.
 	 */
+	@Test
+	public void checkDropDownListeners() {
+		DisplayPanel display = new DisplayPanel(800,800, Color.white);
+		//assertEquals("
+	}
 
 }

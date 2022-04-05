@@ -23,7 +23,8 @@ public class testGoatPad {
 	@Test
 	public void checkNames() { // Green
 		ArrayList<String> names = new ArrayList<String>();
-		names.add("Translate");
+		names.add("Translate To English");
+		names.add("Translate To Goat");
 		names.add("Import");
 		names.add("Export");
 		names.add("Print");
@@ -31,7 +32,7 @@ public class testGoatPad {
 		names.add("Save");
 		toolbar toolbar = new toolbar();
 		dropdown filemenu = toolbar.file;
-		assertEquals(filemenu.getItemCount(), 6);
+		assertEquals(filemenu.getItemCount(), 7);
 		for (int i = 0; i < filemenu.getItemCount(); i++) {
 			assert (filemenu.getItemAt(i).equals(names.get(i)));
 		}
@@ -85,13 +86,13 @@ public class testGoatPad {
 		assertEquals(path.toString(), file.getPath());
 	}
 
-	@Test
-	public void checkTranslate() { // Green
-		toolbar toolbar = new toolbar();
-		String goatEnglish = "BAA";
-		String englishEnglish = toolbar.translate(goatEnglish);
-		assert (englishEnglish.equals("Hello"));
-	}
+	//@Test
+	//public void checkTranslate() { // Green
+		//toolbar toolbar = new toolbar();
+		//String goatEnglish = "BAA";
+		//String englishEnglish = toolbar.translate(goatEnglish);
+		//assert (englishEnglish.equals("Hello"));
+	//}
 
 	@Test
 	public void checkHighlight() {
@@ -187,17 +188,6 @@ public class testGoatPad {
 	}
 	
 	@Test
-	public void checkDropDownPanel() {
-		DropDownPanel drop = new DropDownPanel();
-		JPanel panel = new JPanel();
-		panel.setSize(400, 400);
-		
-		assertEquals(panel.getSize(), drop.getSize());
-		assert(drop.isVisible() == true);
-		
-	}
-	
-	@Test
 	public void checkOpenFile() {
 		toolbar toolbar = new toolbar();
 		JTextArea text = new JTextArea();
@@ -213,5 +203,6 @@ public class testGoatPad {
 		toolbar.saveFile(text);
 		assertEquals(toolbar.response,JFileChooser.APPROVE_OPTION);
 	}
+	
 	
 }
