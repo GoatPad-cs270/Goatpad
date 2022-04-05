@@ -112,7 +112,7 @@ public class toolbar {
 	}
 	
 
-	public String translateToEnglish(String str) {
+	public String translateToEnglish(String str) { //bababooey
 		String temp = str;
 		temp = temp.toLowerCase();
 
