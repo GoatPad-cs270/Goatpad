@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="goatPad/" kind="src" path="goat/goatPad/src"/>
 	<classpathentry kind="src" path="goat/goatPad/src/goatPad"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path="goat/src"/>
+	<classpathentry kind="src" path="goaterikbranch/src"/>
+	<classpathentry kind="src" path="goatgoatpad/goatPad/src"/>
+	<classpathentry kind="src" path="GoatPad/src"/>
+	<classpathentry kind="src" path="goatpadpremium/src"/>
 	<classpathentry kind="output" path="GoatPad/bin"/>
 </classpath>
