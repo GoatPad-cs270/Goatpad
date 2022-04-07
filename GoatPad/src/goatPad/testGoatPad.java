@@ -147,6 +147,7 @@ public class testGoatPad {
 		String actualOutput = os.toString();
 		String expectedOutput = items;
 		assertEquals(actualOutput, expectedOutput);
+		
 
 	}
 

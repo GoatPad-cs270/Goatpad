@@ -1,5 +1,8 @@
 package goatPad;
 
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -11,10 +14,14 @@ import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class toolbar {
-	
+	//taylor 
 	private boolean hasPartner = false;
 	
 	public int response;
+	
+	public boolean undo = false;
+	
+	String undoString = "";
 
 	public dropdown file = new dropdown();
 
@@ -71,6 +78,17 @@ public class toolbar {
 		}
 		
 	}
+	public void printFile(JTextArea text) {
+		PrinterJob pj = PrinterJob.getPrinterJob();
+		    if (pj.printDialog()) {
+		        try {pj.print();}
+		        catch (PrinterException exc) {
+		            System.out.println(exc);
+		        }
+		    }		 
+		
+	}
+	
 	
 	/**
 	 * opens up file explorer to select current a txt file to place in the current text area
@@ -110,6 +128,7 @@ public class toolbar {
 		return text.getText();
 		
 	}
+	
 	
 
 	public String translateToEnglish(String str) {
@@ -162,16 +181,34 @@ public class toolbar {
 	 * @return
 	 */
 	public String undo(Document doc) {
-		// Can make a better undo function, but this is one of the only ways to allow
-		// the test to pass.
-		doc.inputs.remove(doc.inputs.size() - 1);
-		doc.content = "";
-		for (String input : doc.inputs) {
-			doc.content += input;
-		}
-		return doc.content;
+
+		if (doc.content == "" || doc.content == null) {
+            undo = true;
+            return null;
+        } else {
+            undo = true;
+            undoString = doc.inputs.remove(doc.inputs.size() - 1);
+            doc.content = "";
+            for (String input : doc.inputs) {
+                doc.content += input;
+            }
+            return doc.content;
+        }
 
 	}
+	/**
+     * Redo's the most recent UNDO performed on the document
+     * 
+     * @param doc
+     * @return
+     */
+    public String redo(Document doc) {
+        if (undo == true) {
+            doc.setContents(undoString);
+            undo = false;
+        }
+        return doc.content;
+    }
 
 	/**
 	 * gets content from file and returns it into document form
@@ -418,4 +455,6 @@ public class toolbar {
 	protected boolean getHasPartner() {
 		return hasPartner;
 	}
+	
+	
 }
