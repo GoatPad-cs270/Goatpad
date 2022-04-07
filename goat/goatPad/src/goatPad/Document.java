@@ -9,6 +9,7 @@ public class Document {
 	 * Keeps track of all the user inputs.
 	 */
 	ArrayList<String> inputs = new ArrayList<String>();
+	String currentInput;
 
 	/**
 	 * Contains all the content (words, spaces, etc.) of the Document as a String
@@ -66,7 +67,7 @@ public class Document {
 	 * clears document
 	 */
 	public void clear() {
-
+		this.content = "";
 	}
 
 	/**
@@ -84,7 +85,17 @@ public class Document {
 	 * @param string
 	 */
 	public void setContents(String string) {
-		inputs.add(string);
+		if (inputs.isEmpty() == true) {
+			currentInput = string;
+			inputs.add(string);
+		} else {
+			for (int i = 0; i < string.length(); i++) {
+				if (currentInput.length() == i) {
+					inputs.add(string.substring(i));
+					currentInput += string.substring(i);
+				}
+			}
+		}
 		content += string;
 	}
 
@@ -120,22 +131,44 @@ public class Document {
 	 * @param contents
 	 */
 	public void setContents(Document contents) {
-		// TODO Auto-generated method stub
+		this.content = contents.content;
 
 	}
 
 	/**
+	 * Directly translates the passed in content to Goat English.
+	 * 
+	 * @param content
+	 * @return
+	 */
+	public String translateTextToGoat(String content) {
+		return toolbar.translateToGoat(content);
+	}
+
+	/**
+	 * Directly translates the passed in content to Human English.
+	 * 
+	 * @param content
+	 * @return
+	 */
+	public String translateTextToEnglish(String content) {
+		return toolbar.translateToEnglish(content);
+	}
+
+	/**
 	 * Translates the content of the Document from Standard English to Goat English.
+	 * Has a return type of void.
 	 */
 	public void translateContentToGoat() {
-		content = toolbar.translateToGoat(content);
+		this.content = toolbar.translateToGoat(this.content);
+
 	}
 
 	/**
 	 * Translates the content of the Document from Goat English to Standard English.
 	 */
 	public void translateContentToEnglish() {
-		content = toolbar.translateToEnglish(content);
+		this.content = toolbar.translateToEnglish(this.content);
 	}
 
 }
