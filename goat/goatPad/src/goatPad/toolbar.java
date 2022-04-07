@@ -1,9 +1,21 @@
 package goatPad;
 
+//
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.nio.file.Path;
+import java.util.Scanner;
+
+import javax.swing.JFileChooser;
+import javax.swing.JTextArea;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class toolbar {
+
+	boolean undo = false;
+	String undoString = "";
+	int response;
 
 	private boolean hasPartner = false;
 
@@ -31,6 +43,73 @@ public class toolbar {
 		} else {
 			return null;
 		}
+
+	}
+
+	/**
+	 * opens up file explorer to save current text area as chosen file type
+	 * 
+	 * @param
+	 * @void
+	 */
+	public void saveFile(JTextArea text) {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File("."));
+
+		response = fileChooser.showSaveDialog(null);
+
+		if (response == JFileChooser.APPROVE_OPTION) {
+			File file;
+			PrintWriter fileOut = null;
+
+			file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+			try {
+				fileOut = new PrintWriter(file);
+				fileOut.println(text.getText());
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} finally {
+				fileOut.close();
+			}
+		}
+
+	}
+
+	/**
+	 * opens up file explorer to select current a txt file to place in the current
+	 * text area
+	 * 
+	 * @param
+	 * @void
+	 */
+	public String openFile(JTextArea text) {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File("."));
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt");
+		fileChooser.setFileFilter(filter);
+
+		response = fileChooser.showOpenDialog(null);
+
+		if (response == JFileChooser.APPROVE_OPTION) {
+			File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+			Scanner fileIn = null;
+
+			try {
+				fileIn = new Scanner(file);
+				if (file.isFile()) {
+					while (fileIn.hasNextLine()) {
+						String line = fileIn.nextLine() + "\n";
+						text.append(line);
+					}
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				fileIn.close();
+			}
+		}
+		return text.getText();
 
 	}
 
@@ -95,15 +174,38 @@ public class toolbar {
 	 * @return
 	 */
 	public String undo(Document doc) {
-		// Can make a better undo function, but this is one of the only ways to allow
-		// the test to pass.
-		doc.inputs.remove(doc.inputs.size() - 1);
-		doc.content = "";
-		for (String input : doc.inputs) {
-			doc.content += input;
+		if (doc.content == "" || doc.content == null) {
+			undo = true;
+			return null;
+		} else {
+			undo = true;
+			undoString = doc.inputs.remove(doc.inputs.size() - 1);
+			doc.content = "";
+			for (String input : doc.inputs) {
+				doc.content += input;
+			}
+			return doc.content;
+		}
+
+	}
+
+	/**
+	 * Redo's the most recent UNDO performed on the document
+	 * 
+	 * @param doc
+	 * @return
+	 */
+	public String redo(Document doc) {
+		if (undo == true) {
+			doc.inputs.add(undoString);
+			doc.content = "";
+
+			for (String input : doc.inputs) {
+				doc.content += input;
+			}
+			undo = false;
 		}
 		return doc.content;
-
 	}
 
 	/**

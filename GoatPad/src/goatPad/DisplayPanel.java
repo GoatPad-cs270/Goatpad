@@ -40,6 +40,8 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	JPanel statusBar = new JPanel();
 	JLabel status = new JLabel();
+	
+	dropdown drop = new dropdown();
 
 	dropdown drop = new dropdown();
 
@@ -56,6 +58,8 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 		undoButton.setBounds(5, 5, 100, 30);
 		redoButton.setBounds(110, 5, 100, 30);
+		
+		drop.addActionListener(this);
 
 		drop.addActionListener(this);
 
@@ -71,6 +75,17 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		statusBar.setBackground(Color.LIGHT_GRAY);
 		status.setText("Line:  Col: ");
 		this.wordWrapOnOff(wordWrapOn);
+		
+		//Adds all panels to the main panel
+		this.add(drop);
+		this.add(textArea);
+		this.add(undoButton);
+		this.add(redoButton);
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		this.setSize(width,height);
+		this.setVisible(true);
 
 		// Adds all panels to the main panel
 		this.add(drop);
@@ -107,6 +122,42 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	protected void paintComponent(Graphics g) {
 
+	}
+	
+	public dropdown getDropDown() {
+		return drop;
+	}
+	
+	//Calls functions to do the indicated features
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==drop) {
+			if(drop.getSelectedItem() == "Import") {
+				System.out.println(drop.getSelectedItem());
+			}
+			if(drop.getSelectedItem() == "Export") {
+				System.out.println(drop.getSelectedItem());
+			}
+			if(drop.getSelectedItem() == "Print") {
+				System.out.println(drop.getSelectedItem());
+			}
+			if(drop.getSelectedItem() == "Open") {
+				System.out.println(drop.getSelectedItem());
+				textArea.append(toolbar.openFile(textArea));
+			}
+			if(drop.getSelectedItem() == "Save") {
+				System.out.println(drop.getSelectedItem());
+				toolbar.saveFile(textArea);
+			}
+			if(drop.getSelectedItem() == "Translate To English"){
+				System.out.println(drop.getSelectedItem());
+				textArea.append(toolbar.translateToEnglish(textArea.getText()));
+			}
+			if(drop.getSelectedItem() == "Translate To Goat"){
+				System.out.println(drop.getSelectedItem());
+				textArea.append(toolbar.translateToGoat(textArea.getText()));
+			}
+		}
 	}
 
 	public dropdown getDropDown() {
@@ -315,9 +366,11 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		}
 	}
 
+
 //	@Override
 //	public void actionPerformed(ActionEvent e) {
 //		// TODO Auto-generated method stub
 //		
 //	}
+
 }

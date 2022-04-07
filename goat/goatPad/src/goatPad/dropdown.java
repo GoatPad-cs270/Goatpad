@@ -2,17 +2,22 @@ package goatPad;
 
 import javax.swing.JComboBox;
 
+//
 public class dropdown extends JComboBox {
 
 	// This is meant to test the names of the dropdown menu
 	public String names;
 
 	public dropdown() {
-		this.addItem("Translate");
+		this.addItem("Translate To English");
+		this.addItem("Translate To Goat");
 		this.addItem("Import");
 		this.addItem("Export");
 		this.addItem("Print");
+		this.addItem("Open");
 		this.addItem("Save");
+		this.addItem("Undo");
+		this.addItem("Redo");
 	}
 
 	/**
