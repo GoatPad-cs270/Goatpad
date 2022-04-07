@@ -1,5 +1,6 @@
 package goatPad;
 
+//
 public class Window {
 
 	int width, height;
