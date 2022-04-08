@@ -1,6 +1,6 @@
 package finalPackage;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
 
 public class dropdown extends JComboBox {
 
@@ -15,7 +15,9 @@ public class dropdown extends JComboBox {
 		this.addItem("Print");
 		this.addItem("Open");
 		this.addItem("Save");
-		
+		this.addItem("Undo");
+		this.addItem("Redo");
+
 	}
 
 	/**
@@ -52,7 +54,5 @@ public class dropdown extends JComboBox {
 	public Pos[] searchAll(String str) {
 		return null;
 	}
-	
-	
-	
+
 }

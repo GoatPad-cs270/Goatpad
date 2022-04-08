@@ -1,6 +1,5 @@
 package finalPackage;
 
-import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
@@ -14,13 +13,13 @@ import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class toolbar {
-	//taylor 
+	// taylor
 	private boolean hasPartner = false;
-	
+
 	public int response;
-	
+
 	public boolean undo = false;
-	
+
 	String undoString = "";
 
 	public dropdown file = new dropdown();
@@ -47,51 +46,51 @@ public class toolbar {
 		}
 
 	}
-	
+
 	/**
 	 * opens up file explorer to save current text area as chosen file type
 	 * 
-	 * @param 
+	 * @param
 	 * @void
 	 */
 	public void saveFile(JTextArea text) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File("."));
-		
+
 		response = fileChooser.showSaveDialog(null);
-		
-		if(response == JFileChooser.APPROVE_OPTION) {
+
+		if (response == JFileChooser.APPROVE_OPTION) {
 			File file;
 			PrintWriter fileOut = null;
-			
+
 			file = new File(fileChooser.getSelectedFile().getAbsolutePath());
 			try {
 				fileOut = new PrintWriter(file);
 				fileOut.println(text.getText());
-			} 
-			catch (FileNotFoundException e) {
+			} catch (FileNotFoundException e) {
 				e.printStackTrace();
-			}
-			finally {
+			} finally {
 				fileOut.close();
 			}
 		}
-		
+
 	}
+
 	public void printFile(JTextArea text) {
 		PrinterJob pj = PrinterJob.getPrinterJob();
-		    if (pj.printDialog()) {
-		        try {pj.print();}
-		        catch (PrinterException exc) {
-		            System.out.println(exc);
-		        }
-		    }		 
-		
+		if (pj.printDialog()) {
+			try {
+				pj.print();
+			} catch (PrinterException exc) {
+				System.out.println(exc);
+			}
+		}
+
 	}
-	
-	
+
 	/**
-	 * opens up file explorer to select current a txt file to place in the current text area
+	 * opens up file explorer to select current a txt file to place in the current
+	 * text area
 	 * 
 	 * @param
 	 * @void
@@ -101,35 +100,31 @@ public class toolbar {
 		fileChooser.setCurrentDirectory(new File("."));
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt");
 		fileChooser.setFileFilter(filter);
-		
+
 		response = fileChooser.showOpenDialog(null);
-		
-		if(response == JFileChooser.APPROVE_OPTION) {
+
+		if (response == JFileChooser.APPROVE_OPTION) {
 			File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
 			Scanner fileIn = null;
-			
+
 			try {
 				fileIn = new Scanner(file);
 				if (file.isFile()) {
-					while(fileIn.hasNextLine()) {
-						String line = fileIn.nextLine()+"\n";
+					while (fileIn.hasNextLine()) {
+						String line = fileIn.nextLine() + "\n";
 						text.append(line);
 					}
 				}
-			} 
-			catch (FileNotFoundException e) {
+			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			finally {
+			} finally {
 				fileIn.close();
 			}
 		}
 		return text.getText();
-		
+
 	}
-	
-	
 
 	public String translateToEnglish(String str) {
 		String temp = str;
@@ -183,32 +178,44 @@ public class toolbar {
 	public String undo(Document doc) {
 
 		if (doc.content == "" || doc.content == null) {
-            undo = true;
-            return null;
-        } else {
-            undo = true;
-            undoString = doc.inputs.remove(doc.inputs.size() - 1);
-            doc.content = "";
-            for (String input : doc.inputs) {
-                doc.content += input;
-            }
-            return doc.content;
-        }
+			undo = true;
+			return null;
+		} else {
+			undo = true;
+			undoString = doc.inputs.remove(doc.inputs.size() - 1);
+			doc.content = "";
+			for (String input : doc.inputs) {
+				doc.content += input;
+			}
+			return doc.content;
+		}
 
 	}
+
 	/**
-     * Redo's the most recent UNDO performed on the document
-     * 
-     * @param doc
-     * @return
-     */
-    public String redo(Document doc) {
-        if (undo == true) {
-            doc.setContents(undoString);
-            undo = false;
-        }
-        return doc.content;
-    }
+	 * Redo's the most recent UNDO performed on the document
+	 * 
+	 * @param doc
+	 * @return
+	 */
+	/**
+	 * Redo's the most recent UNDO performed on the document
+	 * 
+	 * @param doc
+	 * @return
+	 */
+	public String redo(Document doc) {
+		if (undo == true) {
+			doc.inputs.add(undoString);
+			doc.content = "";
+
+			for (String input : doc.inputs) {
+				doc.content += input;
+			}
+			undo = false;
+		}
+		return doc.content;
+	}
 
 	/**
 	 * gets content from file and returns it into document form
@@ -455,6 +462,5 @@ public class toolbar {
 	protected boolean getHasPartner() {
 		return hasPartner;
 	}
-	
-	
+
 }

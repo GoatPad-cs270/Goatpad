@@ -2,9 +2,6 @@ package finalPackage;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.swing.*;
-
-import java.awt.FlowLayout;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.OutputStream;
@@ -23,16 +20,14 @@ public class testGoatPad {
 	@Test
 	public void checkNames() { // Green
 		ArrayList<String> names = new ArrayList<String>();
-		names.add("Translate To English");
-		names.add("Translate To Goat");
+		names.add("Translate");
 		names.add("Import");
 		names.add("Export");
 		names.add("Print");
-		names.add("Open");
 		names.add("Save");
 		toolbar toolbar = new toolbar();
 		dropdown filemenu = toolbar.file;
-		assertEquals(filemenu.getItemCount(), 7);
+		assertEquals(filemenu.getItemCount(), 5);
 		for (int i = 0; i < filemenu.getItemCount(); i++) {
 			assert (filemenu.getItemAt(i).equals(names.get(i)));
 		}
@@ -86,13 +81,13 @@ public class testGoatPad {
 		assertEquals(path.toString(), file.getPath());
 	}
 
-	//@Test
-	//public void checkTranslate() { // Green
-		//toolbar toolbar = new toolbar();
-		//String goatEnglish = "BAA";
-		//String englishEnglish = toolbar.translate(goatEnglish);
-		//assert (englishEnglish.equals("Hello"));
-	//}
+	@Test
+	public void checkTranslate() { // Green
+		toolbar toolbar = new toolbar();
+		String goatEnglish = "BAAAA";
+		String englishEnglish = toolbar.translateToEnglish(goatEnglish);
+		assertEquals(englishEnglish, "Hello");
+	}
 
 	@Test
 	public void checkHighlight() {
@@ -147,8 +142,6 @@ public class testGoatPad {
 		String actualOutput = os.toString();
 		String expectedOutput = items;
 		assertEquals(actualOutput, expectedOutput);
-		
-
 	}
 
 	public void CheckminimizeWindow() {
@@ -178,6 +171,7 @@ public class testGoatPad {
 		assert (words.equals(str));
 	}
 
+	@Test
 	public void CheckmaximizeWindow() {
 		Window display = new Window(0, 0);
 		display.setHeight(display.getHeight());
@@ -187,23 +181,21 @@ public class testGoatPad {
 		assertEquals(height, display.getHeight());
 		assertEquals(width, display.getWidth());
 	}
-	
+
 	@Test
-	public void checkOpenFile() {
-		toolbar toolbar = new toolbar();
-		JTextArea text = new JTextArea();
-		toolbar.openFile(text);
-		assertEquals(toolbar.response,JFileChooser.APPROVE_OPTION);
-		
+	public void checkDocumentTranslation() {
+		Document doc = new Document();
+		String englishText = "This will revolutionize the LLGHS community!";
+		String goatText = "RWwbawrb/wwawybyb/rrbayrarybryrwawarbyawywba/rwwbba/YBYBWAWBRB/aaarayayrybyawrwyy";
+
+		doc.setContents(englishText);
+		doc.translateContentToGoat();
+
+		assertEquals(doc.content, goatText);
+
+		doc.translateContentToEnglish();
+
+		assertEquals(doc.content, englishText);
 	}
-	
-	@Test
-	public void checkSaveFile() {
-		toolbar toolbar = new toolbar();
-		JTextArea text = new JTextArea();
-		toolbar.saveFile(text);
-		assertEquals(toolbar.response,JFileChooser.APPROVE_OPTION);
-	}
-	
-	
+
 }

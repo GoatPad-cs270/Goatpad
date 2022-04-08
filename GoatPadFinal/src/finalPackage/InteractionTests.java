@@ -2,7 +2,6 @@ package finalPackage;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Color;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -68,19 +67,19 @@ public class InteractionTests {
 	 * highlighted string Translates the highlighted string
 	 * 
 	 */
-	//@Test
-	//public void IntHighLightAndTranslate() {
-		//Document doc = new Document();
-		//toolbar toolbar = new toolbar();
-		//String goatEnglish = "BABAAA";
-		//doc.setContents("BABAAA");
-		//Pos x1 = new Pos(0, 8);
-		//Pos x2 = new Pos(32, 8);
-		//String highlighted = doc.highlightString(x1, x2); // each character is 8 pixels
-		//assertEquals(highlighted, goatEnglish);
-		//String english = toolbar.translate("Sad"); // Sets the word for BABAAA to sad
-		//assertEquals(english, goatEnglish);
-	//}
+	@Test
+	public void IntHighLightAndTranslate() {
+		Document doc = new Document();
+		toolbar toolbar = new toolbar();
+		String goatEnglish = "RBAAB";
+		doc.setContents("RBAAB");
+		Pos x1 = new Pos(0, 8);
+		Pos x2 = new Pos(32, 8);
+		String highlighted = doc.highlightString(x1, x2); // each character is 8 pixels
+		assertEquals(highlighted, goatEnglish);
+		String english = toolbar.translateToGoat("Sad"); // Sets the word for BABAAA to sad
+		assertEquals(english, goatEnglish);
+	}
 
 	/*
 	 * checks that test string is wrapped when window is made smaller
@@ -115,15 +114,50 @@ public class InteractionTests {
 		int lastCount = (int) lastStr.chars().count();
 		assert (lastCount < display.getWidth());
 	}
-	
+
 	/**
-	 * Tests to see if the action listener in the dropdown menu functions.
-	 * Also checks to make sure that the functions are actually called.
+	 * Tests translation from English to Goat as well as the private
+	 * handleCharacterChange() function.
+	 * 
 	 */
 	@Test
-	public void checkDropDownListeners() {
-		DisplayPanel display = new DisplayPanel(800,800, Color.white);
-		//assertEquals("
+	public void EnglishToGoatTest() {
+		// Tests all lowercase input
+		String englishWord = "fruit punch";
+		String goatWord = "bbrrryawrw/brrybyaawb";
+		toolbar toolbar = new toolbar();
+
+		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
+
+		// Tests for case sensitivity.
+		englishWord = "Fruit Punch";
+		goatWord = "BBrrryawrw/BRrybyaawb";
+
+		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
+
+		// Tests all uppercase input
+		englishWord = "FRUIT PUNCH";
+		goatWord = "BBRRRYAWRW/BRRYBYAAWB";
+
+		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
+
+		englishWord = "The quick brown fox jumps over the lazy dog";
+		goatWord = "RWwbba/raryawaaya/brrarwwby/bbarwy/bwryaybrrb/aryrbarr/rwwbba/ybaywyy/abarwa";
+
+		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
+
+	}
+
+	@Test
+	public void GoatToEnglishTest() {
+		toolbar toolbar = new toolbar();
+
+		String goatEnglish = "AW/wwawybyb/brrybyaawb/bayrbarryyarbyba";
+
+		String english = "I will punch everyone";
+		String englishEnglish = toolbar.translateToEnglish(goatEnglish);
+
+		assertEquals(english, englishEnglish);
 	}
 
 }

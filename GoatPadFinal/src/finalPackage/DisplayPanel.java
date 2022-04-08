@@ -9,8 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterJob;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -40,7 +38,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	JPanel statusBar = new JPanel();
 	JLabel status = new JLabel();
-	
+
 	dropdown drop = new dropdown();
 
 	boolean wordWrapOn = true;
@@ -56,8 +54,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 		undoButton.setBounds(5, 5, 100, 30);
 		redoButton.setBounds(110, 5, 100, 30);
-		
-		drop.addActionListener(this);
 
 		drop.addActionListener(this);
 
@@ -73,17 +69,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		statusBar.setBackground(Color.LIGHT_GRAY);
 		status.setText("Line:  Col: ");
 		this.wordWrapOnOff(wordWrapOn);
-		
-		//Adds all panels to the main panel
-		this.add(drop);
-		this.add(textArea);
-		this.add(undoButton);
-		this.add(redoButton);
-		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.setSize(width,height);
-		this.setVisible(true);
 
 		// Adds all panels to the main panel
 		this.add(drop);
@@ -121,11 +106,11 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	protected void paintComponent(Graphics g) {
 
 	}
-	
+
 	public dropdown getDropDown() {
 		return drop;
 	}
-	
+
 	// Calls functions to do the indicated features
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -138,7 +123,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			}
 			if (drop.getSelectedItem() == "Print") {
 				System.out.println(drop.getSelectedItem());
-				toolbar.printFile(textArea);
 			}
 			if (drop.getSelectedItem() == "Open") {
 				System.out.println(drop.getSelectedItem());
@@ -149,17 +133,28 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				toolbar.saveFile(textArea);
 			}
 			if (drop.getSelectedItem() == "Translate To English") {
-                System.out.println(drop.getSelectedItem());
-                String text = textArea.getText();
-                textArea.setText("");
-                textArea.append(doc.translateTextToEnglish(text));
-            }
-            if (drop.getSelectedItem() == "Translate To Goat") {
-                System.out.println(drop.getSelectedItem());
-                String text = textArea.getText();
-                textArea.setText("");
-                textArea.append(doc.translateTextToGoat(text));
-            }
+				System.out.println(drop.getSelectedItem());
+				String text = textArea.getText();
+				textArea.setText("");
+				textArea.append(doc.translateTextToEnglish(text));
+			}
+			if (drop.getSelectedItem() == "Translate To Goat") {
+				System.out.println(drop.getSelectedItem());
+				String text = textArea.getText();
+				textArea.setText("");
+				textArea.append(doc.translateTextToGoat(text));
+			}
+			if (drop.getSelectedItem() == "Redo") {
+				System.out.println(drop.getSelectedItem());
+				toolbar.redo(doc);
+				textArea.setText(doc.content);
+			}
+			if (drop.getSelectedItem() == "Undo") {
+				System.out.println(drop.getSelectedItem());
+				toolbar.undo(doc);
+				textArea.setText(doc.content);
+			}
+
 		}
 	}
 
@@ -255,6 +250,9 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		if (undoButton.contains(input.getPoint())) {
 			toolbar.undo(doc);
 			textArea.setText(doc.content);
+		} else if (redoButton.contains(input.getPoint())) {
+			toolbar.redo(doc);
+			textArea.setText(doc.content);
 		}
 	}
 
@@ -327,12 +325,5 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			textArea.replaceSelection(str);
 		}
 	}
-
-
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 }
