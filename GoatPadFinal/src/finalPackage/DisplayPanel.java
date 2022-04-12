@@ -114,60 +114,50 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			if (drop.getSelectedItem() == "Print") {
 				System.out.println(drop.getSelectedItem());
 			}
-//			if (drop.getSelectedItem() == "Cut") {
-//				System.out.println(drop.getSelectedItem());
-//				textArea.cut();
-//			}
-//			if (drop.getSelectedItem() == "Copy") {
-//				System.out.println(drop.getSelectedItem());
-//				textArea.copy();
-//				String copyText = textArea.getSelectedText();
-//				StringSelection copySelection = new StringSelection(copyText);
-//				clipboard.setContents(copySelection, copySelection);
-		}
-		if (drop.getSelectedItem() == "Paste") {
-			System.out.println(drop.getSelectedItem());
-			textArea.paste();
-//				try {
-//				Transferable pasteText = clipboard.getContents(DisplayPanel.this);
-//				String sel = (String) pasteText.getTransferData(DataFlavor.stringFlavor);
-//				textArea.replaceRange(sel,textArea.getSelectionStart(),textArea.getSelectionEnd());
-//				}
-//				catch(Exception e1) {
-//					System.out.println("Didn't work");
-//				}
-		}
-		if (drop.getSelectedItem() == "Open") {
-			System.out.println(drop.getSelectedItem());
-			textArea.append(toolbar.openFile(textArea));
-		}
-		if (drop.getSelectedItem() == "Save") {
-			System.out.println(drop.getSelectedItem());
-			toolbar.saveFile(textArea);
-		}
-		if (drop.getSelectedItem() == "Translate To English") {
-			System.out.println(drop.getSelectedItem());
-			String text = textArea.getText();
-			textArea.setText("");
-			textArea.append(doc.translateTextToEnglish(text));
-		}
-		if (drop.getSelectedItem() == "Translate To Goat") {
-			System.out.println(drop.getSelectedItem());
-			String text = textArea.getText();
-			textArea.setText("");
-			textArea.append(doc.translateTextToGoat(text));
-		}
-		if (drop.getSelectedItem() == "Redo") {
-			System.out.println(drop.getSelectedItem());
-			toolbar.redo(doc);
-			textArea.setText(doc.content);
-		}
-		if (drop.getSelectedItem() == "Undo") {
-			System.out.println(drop.getSelectedItem());
-			toolbar.undo(doc);
-			textArea.setText(doc.content);
-		}
+			if (drop.getSelectedItem() == "Cut") {
+				System.out.println(drop.getSelectedItem());
+				textArea.cut();
+			}
+			if (drop.getSelectedItem() == "Copy") {
+				System.out.println(drop.getSelectedItem());
+				textArea.copy();
+			}
+			if (drop.getSelectedItem() == "Paste") {
+				System.out.println(drop.getSelectedItem());
+				textArea.paste();
+			}
 
+			if (drop.getSelectedItem() == "Open") {
+				System.out.println(drop.getSelectedItem());
+				textArea.append(toolbar.openFile(textArea));
+			}
+			if (drop.getSelectedItem() == "Save") {
+				System.out.println(drop.getSelectedItem());
+				toolbar.saveFile(textArea);
+			}
+			if (drop.getSelectedItem() == "Translate To English") {
+				System.out.println(drop.getSelectedItem());
+				String text = textArea.getText();
+				textArea.setText("");
+				textArea.append(doc.translateTextToEnglish(text));
+			}
+			if (drop.getSelectedItem() == "Translate To Goat") {
+				System.out.println(drop.getSelectedItem());
+				String text = textArea.getText();
+				textArea.setText("");
+				textArea.append(doc.translateTextToGoat(text));
+			}
+			if (drop.getSelectedItem() == "Redo") {
+				System.out.println(drop.getSelectedItem());
+				toolbar.redo(doc);
+				textArea.setText(doc.content);
+			}
+			if (drop.getSelectedItem() == "Undo") {
+				System.out.println(drop.getSelectedItem());
+				toolbar.undo(doc);
+				textArea.setText(doc.content);
+			}
+		}
 	}
 
 	@Override
