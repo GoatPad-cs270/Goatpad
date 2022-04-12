@@ -26,7 +26,6 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.text.BadLocationException;
 
 //Consider making hotkeys for undo and redo
-//This is to fix my branch
 
 public class DisplayPanel extends JFrame implements MouseInputListener, KeyListener, DocumentListener, ActionListener {
 
