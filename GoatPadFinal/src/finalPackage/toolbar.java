@@ -212,7 +212,8 @@ public class toolbar {
 			for (String input : doc.inputs) {
 				doc.content += input;
 			}
-			undo = false;
+			undoString = "";
+
 		}
 		return doc.content;
 	}
