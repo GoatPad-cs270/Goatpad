@@ -27,6 +27,7 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.text.BadLocationException;
 
 //Consider making hotkeys for undo and redo
+//Joe Comment
 
 public class DisplayPanel extends JFrame implements MouseInputListener, KeyListener, DocumentListener, ActionListener {
 
@@ -114,28 +115,17 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			if (drop.getSelectedItem() == "Print") {
 				System.out.println(drop.getSelectedItem());
 			}
-//			if (drop.getSelectedItem() == "Cut") {
-//				System.out.println(drop.getSelectedItem());
-//				textArea.cut();
-//			}
-//			if (drop.getSelectedItem() == "Copy") {
-//				System.out.println(drop.getSelectedItem());
-//				textArea.copy();
-//				String copyText = textArea.getSelectedText();
-//				StringSelection copySelection = new StringSelection(copyText);
-//				clipboard.setContents(copySelection, copySelection);
+			if (drop.getSelectedItem() == "Cut") {
+				System.out.println(drop.getSelectedItem());
+				textArea.cut();
+			}
+			if (drop.getSelectedItem() == "Copy") {
+				System.out.println(drop.getSelectedItem());
+				textArea.copy();
 		}
 		if (drop.getSelectedItem() == "Paste") {
 			System.out.println(drop.getSelectedItem());
 			textArea.paste();
-//				try {
-//				Transferable pasteText = clipboard.getContents(DisplayPanel.this);
-//				String sel = (String) pasteText.getTransferData(DataFlavor.stringFlavor);
-//				textArea.replaceRange(sel,textArea.getSelectionStart(),textArea.getSelectionEnd());
-//				}
-//				catch(Exception e1) {
-//					System.out.println("Didn't work");
-//				}
 		}
 		if (drop.getSelectedItem() == "Open") {
 			System.out.println(drop.getSelectedItem());
@@ -167,7 +157,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			toolbar.undo(doc);
 			textArea.setText(doc.content);
 		}
-
+		}
 	}
 
 	@Override
