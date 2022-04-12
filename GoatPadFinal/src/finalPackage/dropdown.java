@@ -10,6 +10,9 @@ public class dropdown extends JComboBox {
 	public dropdown() {
 		this.addItem("Translate To English");
 		this.addItem("Translate To Goat");
+		this.addItem("Cut");
+		this.addItem("Copy");
+		this.addItem("Paste");
 		this.addItem("Import");
 		this.addItem("Export");
 		this.addItem("Print");
