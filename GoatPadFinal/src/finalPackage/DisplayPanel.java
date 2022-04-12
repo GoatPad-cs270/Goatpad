@@ -27,6 +27,7 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.text.BadLocationException;
 
 //Consider making hotkeys for undo and redo
+//Joe Comment
 
 public class DisplayPanel extends JFrame implements MouseInputListener, KeyListener, DocumentListener, ActionListener {
 
@@ -121,6 +122,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			if (drop.getSelectedItem() == "Copy") {
 				System.out.println(drop.getSelectedItem());
 				textArea.copy();
+
 			}
 			if (drop.getSelectedItem() == "Paste") {
 				System.out.println(drop.getSelectedItem());
