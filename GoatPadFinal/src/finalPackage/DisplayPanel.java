@@ -1,9 +1,16 @@
 package finalPackage;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.TextArea;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -31,13 +38,14 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	Document doc = new Document();
 	toolbar toolbar = new toolbar();
-
+	Clipboard clipboard = getToolkit().getSystemClipboard();
 	JTextArea textArea = new JTextArea();
 
 	JPanel statusBar = new JPanel();
 	JLabel status = new JLabel();
 
 	dropdown drop = new dropdown();
+	
 
 	boolean wordWrapOn = true;
 	int currentLine, currentCol;
@@ -45,6 +53,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	public DisplayPanel(int width, int height, Color c) {
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(c);
+		setTitle("LLGSHH-Pad");
 
 		textArea.getDocument().addDocumentListener(this);
 		textArea.setBounds(2, 40, width, height);
@@ -61,14 +70,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		status.setText("Line:  Col: ");
 		this.wordWrapOnOff(wordWrapOn);
 
-		// Adds all panels to the main panel
-		this.add(drop);
-		this.add(textArea);
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.setSize(width, height);
-		this.setVisible(true);
 
 		// Creates a listener that listens to movement by the caret
 		textArea.addCaretListener(new CaretListener() {
@@ -112,6 +114,29 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			}
 			if (drop.getSelectedItem() == "Print") {
 				System.out.println(drop.getSelectedItem());
+			}
+			if (drop.getSelectedItem() == "Cut") {
+				System.out.println(drop.getSelectedItem());
+				textArea.cut();
+			}
+			if (drop.getSelectedItem() == "Copy") {
+				System.out.println(drop.getSelectedItem());
+				textArea.copy();
+//				String copyText = textArea.getSelectedText();
+//				StringSelection copySelection = new StringSelection(copyText);
+//				clipboard.setContents(copySelection, copySelection);
+			}
+			if (drop.getSelectedItem() == "Paste") {
+				System.out.println(drop.getSelectedItem());
+				textArea.paste();
+//				try {
+//				Transferable pasteText = clipboard.getContents(DisplayPanel.this);
+//				String sel = (String) pasteText.getTransferData(DataFlavor.stringFlavor);
+//				textArea.replaceRange(sel,textArea.getSelectionStart(),textArea.getSelectionEnd());
+//				}
+//				catch(Exception e1) {
+//					System.out.println("Didn't work");
+//				}
 			}
 			if (drop.getSelectedItem() == "Open") {
 				System.out.println(drop.getSelectedItem());
