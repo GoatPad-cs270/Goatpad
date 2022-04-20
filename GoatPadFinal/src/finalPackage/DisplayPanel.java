@@ -3,7 +3,9 @@ package finalPackage;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -31,8 +33,10 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	Document doc = new Document();
 	toolbar toolbar = new toolbar();
-
+	Clipboard clipboard = getToolkit().getSystemClipboard();
 	JTextArea textArea = new JTextArea();
+	int fontSize = 12;
+	Font font = new Font("Arial", fontSize, fontSize);
 
 	JPanel statusBar = new JPanel();
 	JLabel status = new JLabel();
@@ -45,6 +49,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	public DisplayPanel(int width, int height, Color c) {
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(c);
+		setTitle("LLGSHH-Pad");
 
 		textArea.getDocument().addDocumentListener(this);
 		textArea.setBounds(2, 40, width, height);
@@ -61,7 +66,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		status.setText("Line:  Col: ");
 		this.wordWrapOnOff(wordWrapOn);
 
-		// Adds all panels to the main panel
 		this.add(drop);
 		this.add(textArea);
 
@@ -113,6 +117,19 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			if (drop.getSelectedItem() == "Print") {
 				System.out.println(drop.getSelectedItem());
 			}
+			if (drop.getSelectedItem() == "Cut") {
+				System.out.println(drop.getSelectedItem());
+				textArea.cut();
+			}
+			if (drop.getSelectedItem() == "Copy") {
+				System.out.println(drop.getSelectedItem());
+				textArea.copy();
+			}
+			if (drop.getSelectedItem() == "Paste") {
+				System.out.println(drop.getSelectedItem());
+				textArea.paste();
+			}
+
 			if (drop.getSelectedItem() == "Open") {
 				System.out.println(drop.getSelectedItem());
 				textArea.append(toolbar.openFile(textArea));
@@ -143,7 +160,14 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				toolbar.undo(doc);
 				textArea.setText(doc.content);
 			}
-
+			if (drop.getSelectedItem() == "Zoom In") {
+				System.out.println(drop.getSelectedItem());
+				fontSize += 2;
+				textArea.setFont(new Font("Arial", fontSize, fontSize));
+			}
+			if (drop.getSelectedItem() == "Zoom Out") {
+				System.out.println(drop.getSelectedItem());
+			}
 		}
 	}
 
