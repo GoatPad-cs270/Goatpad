@@ -167,6 +167,11 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			}
 			if (drop.getSelectedItem() == "Zoom Out") {
 				System.out.println(drop.getSelectedItem());
+				fontSize -= 2;
+				// This will simultaneously change the opacity of the words. Keep an eye out, in
+				// case this becomes a problem.
+				// For now, keep it as it adds a cool effect.
+				textArea.setFont(new Font("Arial", fontSize, fontSize));
 			}
 		}
 	}
