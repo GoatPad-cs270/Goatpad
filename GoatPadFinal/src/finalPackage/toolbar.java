@@ -1,18 +1,31 @@
 package finalPackage;
 
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.nio.file.Path;
 import java.util.Scanner;
-
-import javax.swing.JFileChooser;
+import java.awt.print.*;
+import java.text.*;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.management.Notification;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.ServiceUI;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.JTextComponent;
 
 public class toolbar {
+
 	// taylor
 	private boolean hasPartner = false;
 
@@ -76,17 +89,9 @@ public class toolbar {
 
 	}
 
-	public void printFile(JTextArea text) {
-		PrinterJob pj = PrinterJob.getPrinterJob();
-		if (pj.printDialog()) {
-			try {
-				pj.print();
-			} catch (PrinterException exc) {
-				System.out.println(exc);
-			}
-		}
+	
 
-	}
+	
 
 	/**
 	 * opens up file explorer to select current a txt file to place in the current
@@ -212,8 +217,7 @@ public class toolbar {
 			for (String input : doc.inputs) {
 				doc.content += input;
 			}
-			undoString = "";
-
+			undo = false;
 		}
 		return doc.content;
 	}
