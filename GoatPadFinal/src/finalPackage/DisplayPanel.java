@@ -15,7 +15,11 @@ import java.awt.event.MouseEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -31,6 +35,40 @@ import javax.swing.text.BadLocationException;
 
 public class DisplayPanel extends JFrame implements MouseInputListener, KeyListener, DocumentListener, ActionListener {
 
+	// Menu bar containing menus (e.g. File, Edit, etc.)
+	JMenuBar menuBar = new JMenuBar();
+
+	// Menus contained within the menu bar
+	JMenu fileMenu = new JMenu();
+	JMenu editMenu = new JMenu();
+	JMenu formatMenu = new JMenu();
+	JMenu viewMenu = new JMenu();
+	JMenu translateMenu = new JMenu();
+
+	// Menu items contained within the menus
+
+	// File menu items
+	JMenuItem open = new JMenuItem("Open");
+	JMenuItem importItem = new JMenuItem("Import");
+	JMenuItem export = new JMenuItem("Export");
+	JMenuItem print = new JMenuItem("Print");
+	JMenuItem save = new JMenuItem("Save");
+
+	// Edit menu items
+	JMenuItem undo = new JMenuItem("Undo");
+	JMenuItem redo = new JMenuItem("Redo");
+	JMenuItem cut = new JMenuItem("Cut");
+	JMenuItem copy = new JMenuItem("Copy");
+	JMenuItem paste = new JMenuItem("Paste");
+
+	// Format menu items
+	JMenuItem goTranslate = new JMenuItem("Translate to Goat");
+	JMenuItem enTranslate = new JMenuItem("Translate to English");
+
+	// View menu items
+	JMenuItem zoomIn = new JMenuItem("Zoom In");
+	JMenuItem zoomOut = new JMenuItem("Zoom Out");
+
 	Document doc = new Document();
 	toolbar toolbar = new toolbar();
 	Clipboard clipboard = getToolkit().getSystemClipboard();
@@ -40,15 +78,16 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	JPanel statusBar = new JPanel();
 	JLabel status = new JLabel();
+	JScrollPane scrollPane;
 
 	dropdown drop = new dropdown();
 
 	boolean wordWrapOn = true;
 	int currentLine, currentCol;
 
-	public DisplayPanel(int width, int height, Color c) {
+	public DisplayPanel(int width, int height) {
 		this.setPreferredSize(new Dimension(width, height));
-		this.setBackground(c);
+
 		setTitle("LLGSHH-Pad");
 
 		textArea.getDocument().addDocumentListener(this);
@@ -65,6 +104,85 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		statusBar.setBackground(Color.LIGHT_GRAY);
 		status.setText("Line:  Col: ");
 		this.wordWrapOnOff(wordWrapOn);
+
+		this.setJMenuBar(menuBar);
+		// Instantiation of different Menus
+		fileMenu = new JMenu("File");
+		editMenu = new JMenu("Edit");
+		formatMenu = new JMenu("Format");
+		viewMenu = new JMenu("View");
+
+		// Addition of Menus to Menu Bar
+		menuBar.add(fileMenu);
+		menuBar.add(editMenu);
+		menuBar.add(formatMenu);
+		menuBar.add(viewMenu);
+
+		// Assignment of Menu items to appropriate Menus
+
+		// FileMenu
+		fileMenu.add(save);
+		fileMenu.add(open);
+		fileMenu.add(export);
+		fileMenu.add(importItem);
+		fileMenu.add(print);
+
+		save.addActionListener(this);
+		save.setActionCommand("Save");
+
+		open.addActionListener(this);
+		open.setActionCommand("Open");
+
+		export.addActionListener(this);
+		export.setActionCommand("Export");
+
+		importItem.addActionListener(this);
+		importItem.setActionCommand("Import");
+
+		print.addActionListener(this);
+		print.setActionCommand("Print");
+
+		// EditMenu
+		editMenu.add(undo);
+		editMenu.add(redo);
+		editMenu.add(cut);
+		editMenu.add(copy);
+		editMenu.add(paste);
+
+		undo.addActionListener(this);
+		undo.setActionCommand("Undo");
+
+		redo.addActionListener(this);
+		redo.setActionCommand("Redo");
+
+		cut.addActionListener(this);
+		cut.setActionCommand("Cut");
+
+		copy.addActionListener(this);
+		copy.setActionCommand("Copy");
+
+		paste.addActionListener(this);
+		paste.setActionCommand("Paste");
+
+		// FormatMenu
+		formatMenu.add(goTranslate);
+		formatMenu.add(enTranslate);
+
+		goTranslate.addActionListener(this);
+		goTranslate.setActionCommand("Translate to Goat");
+
+		enTranslate.addActionListener(this);
+		enTranslate.setActionCommand("Translate to English");
+
+		// ViewMenu
+		viewMenu.add(zoomIn);
+		viewMenu.add(zoomOut);
+
+		zoomIn.addActionListener(this);
+		zoomIn.setActionCommand("Zoom In");
+
+		zoomOut.addActionListener(this);
+		zoomOut.setActionCommand("Zoom Out");
 
 		this.add(drop);
 		this.add(textArea);
@@ -174,6 +292,62 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				textArea.setFont(new Font("Arial", fontSize, fontSize));
 			}
 		}
+
+		// @formatter:off
+		switch (e.getActionCommand()) {
+			case "Save":
+				toolbar.saveFile(textArea);
+				break;
+			case "Open":
+				textArea.append(toolbar.openFile(textArea));
+				break;
+			case "Export":
+				// Export function
+				break;
+			case "Import":
+				// Import function
+				break;
+			case "Print":
+				// Print function
+				break;
+			case "Undo":
+				toolbar.undo(doc);
+				textArea.setText(doc.content);
+				break;
+			case "Redo":
+				toolbar.redo(doc);
+				textArea.setText(doc.content);
+				break;
+			case "Cut":
+				textArea.cut();
+				break;
+			case "Copy":
+				textArea.copy();
+				break;
+			case "Paste":
+				textArea.paste();
+				break;
+			case "Translate to Goat":
+				String text = textArea.getText();
+				textArea.setText("");
+				textArea.append(doc.translateTextToGoat(text));
+				break;
+			case "Translate to English":
+				text = textArea.getText();
+				textArea.setText("");
+				textArea.append(doc.translateTextToEnglish(text));
+				break;
+			case "Zoom In":
+				fontSize += 2;
+				textArea.setFont(new Font("Arial", fontSize, fontSize));
+				break;
+			case "Zoom Out":
+				fontSize -= 2;
+				textArea.setFont(new Font("Arial", fontSize, fontSize));
+				break;
+			}
+		// @formatter:on
+
 	}
 
 	@Override
