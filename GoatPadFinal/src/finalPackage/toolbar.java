@@ -23,7 +23,7 @@ public class toolbar {
 
 	// For the sake of optimization, consider changing ArrayList of Strings to an
 	// ArrayList of Characters.
-	ArrayList<String> undoStrings = new ArrayList<String>();
+	ArrayList<Character> undoStrings = new ArrayList<Character>();
 
 	public dropdown file = new dropdown();
 
@@ -185,7 +185,7 @@ public class toolbar {
 			return null;
 		} else {
 			undo = true;
-			undoStrings.add(doc.inputs.remove(doc.inputs.size() - 1));
+			undoStrings.add(doc.inputs.remove(doc.inputs.size() - 1).toCharArray()[0]);
 
 			doc.content = "";
 			for (String input : doc.inputs) {
@@ -210,7 +210,7 @@ public class toolbar {
 	 */
 	public String redo(Document doc) {
 		if (undo == true && !undoStrings.isEmpty()) {
-			doc.inputs.add(undoStrings.remove(undoStrings.size() - 1));
+			doc.inputs.add(undoStrings.remove(undoStrings.size() - 1).toString());
 			doc.content = "";
 
 			for (String input : doc.inputs) {
