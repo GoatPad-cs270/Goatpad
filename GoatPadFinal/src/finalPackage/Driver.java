@@ -2,9 +2,12 @@ package finalPackage;
 
 public class Driver {
 
+	static DisplayPanel display;
+
 	public static void main(String[] args) {
 		// translateTests();
-		DisplayPanel display = new DisplayPanel(1000, 1000);
+		display = new DisplayPanel(1000, 1000);
+		display.textArea.setBounds(2, 40, display.getWidth(), 1000);
 	}
 
 	public static void translateTests() {

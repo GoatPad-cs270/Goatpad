@@ -48,6 +48,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	// Menu items contained within the menus
 
 	// File menu items
+	JMenuItem newItem = new JMenuItem("New");
 	JMenuItem open = new JMenuItem("Open");
 	JMenuItem importItem = new JMenuItem("Import");
 	JMenuItem export = new JMenuItem("Export");
@@ -91,7 +92,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		setTitle("LLGSHH-Pad");
 
 		textArea.getDocument().addDocumentListener(this);
-		textArea.setBounds(2, 40, width, height);
 
 		drop.addActionListener(this);
 
@@ -121,11 +121,15 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		// Assignment of Menu items to appropriate Menus
 
 		// FileMenu
+		fileMenu.add(newItem);
 		fileMenu.add(save);
 		fileMenu.add(open);
 		fileMenu.add(export);
 		fileMenu.add(importItem);
 		fileMenu.add(print);
+
+		newItem.addActionListener(this);
+		newItem.setActionCommand("New");
 
 		save.addActionListener(this);
 		save.setActionCommand("Save");
@@ -184,14 +188,9 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		zoomOut.addActionListener(this);
 		zoomOut.setActionCommand("Zoom Out");
 
-		this.add(drop);
+//		this.add(drop);
+
 		this.add(textArea);
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.setSize(width, height);
-		this.setVisible(true);
-
 		// Creates a listener that listens to movement by the caret
 		textArea.addCaretListener(new CaretListener() {
 
@@ -212,9 +211,19 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				updateLineAndCol(lineNum, columnNum);
 			}
 		});
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		this.setSize(width, height);
+		this.setVisible(true);
+
 	}
 
 	protected void paintComponent(Graphics g) {
+
+	}
+
+	public void addTextArea() {
 
 	}
 
@@ -295,6 +304,10 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 		// @formatter:off
 		switch (e.getActionCommand()) {
+			case "New":
+				doc.content = "";
+				textArea.setText(doc.content);
+				break;
 			case "Save":
 				toolbar.saveFile(textArea);
 				break;
