@@ -108,6 +108,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		formatMenu = new JMenu("Format");
 		viewMenu = new JMenu("View");
 
+		// Testing
 		// Addition of Menus to Menu Bar
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
