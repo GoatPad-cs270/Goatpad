@@ -89,7 +89,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	public DisplayPanel(int width, int height) {
 		this.setPreferredSize(new Dimension(width, height));
 
-		this.setBackground(c);
 
 		setTitle("LLGSHH-Pad");
 
