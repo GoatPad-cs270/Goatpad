@@ -7,7 +7,7 @@ public class Driver {
 	public static void main(String[] args) {
 		// translateTests();
 		display = new DisplayPanel(1000, 1000);
-		display.textArea.setBounds(2, 40, display.getWidth(), 1000);
+		display.textArea.setBounds(0, 0, display.getWidth(), display.getHeight());
 	}
 
 	public static void translateTests() {

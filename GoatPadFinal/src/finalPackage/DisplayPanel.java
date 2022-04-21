@@ -81,8 +81,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	JLabel status = new JLabel();
 	JScrollPane scrollPane;
 
-	dropdown drop = new dropdown();
-
 	boolean wordWrapOn = true;
 	int currentLine, currentCol;
 
@@ -92,8 +90,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		setTitle("LLGSHH-Pad");
 
 		textArea.getDocument().addDocumentListener(this);
-
-		drop.addActionListener(this);
 
 		// Creates a status bar which has line and column number of the current caret
 		// location
@@ -227,81 +223,9 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	}
 
-	public dropdown getDropDown() {
-		return drop;
-	}
-
 	// Calls functions to do the indicated features
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == drop) {
-			if (drop.getSelectedItem() == "Import") {
-				System.out.println(drop.getSelectedItem());
-			}
-			if (drop.getSelectedItem() == "Export") {
-				System.out.println(drop.getSelectedItem());
-			}
-			if (drop.getSelectedItem() == "Print") {
-				System.out.println(drop.getSelectedItem());
-			}
-			if (drop.getSelectedItem() == "Cut") {
-				System.out.println(drop.getSelectedItem());
-				textArea.cut();
-			}
-			if (drop.getSelectedItem() == "Copy") {
-				System.out.println(drop.getSelectedItem());
-				textArea.copy();
-			}
-			if (drop.getSelectedItem() == "Paste") {
-				System.out.println(drop.getSelectedItem());
-				textArea.paste();
-			}
-
-			if (drop.getSelectedItem() == "Open") {
-				System.out.println(drop.getSelectedItem());
-				textArea.append(toolbar.openFile(textArea));
-			}
-			if (drop.getSelectedItem() == "Save") {
-				System.out.println(drop.getSelectedItem());
-				toolbar.saveFile(textArea);
-			}
-			if (drop.getSelectedItem() == "Translate To English") {
-				System.out.println(drop.getSelectedItem());
-				String text = textArea.getText();
-				textArea.setText("");
-				textArea.append(doc.translateTextToEnglish(text));
-			}
-			if (drop.getSelectedItem() == "Translate To Goat") {
-				System.out.println(drop.getSelectedItem());
-				String text = textArea.getText();
-				textArea.setText("");
-				textArea.append(doc.translateTextToGoat(text));
-			}
-			if (drop.getSelectedItem() == "Redo") {
-				System.out.println(drop.getSelectedItem());
-				toolbar.redo(doc);
-				textArea.setText(doc.content);
-			}
-			if (drop.getSelectedItem() == "Undo") {
-				System.out.println(drop.getSelectedItem());
-				toolbar.undo(doc);
-				textArea.setText(doc.content);
-			}
-			if (drop.getSelectedItem() == "Zoom In") {
-				System.out.println(drop.getSelectedItem());
-				fontSize += 2;
-				textArea.setFont(new Font("Arial", fontSize, fontSize));
-			}
-			if (drop.getSelectedItem() == "Zoom Out") {
-				System.out.println(drop.getSelectedItem());
-				fontSize -= 2;
-				// This will simultaneously change the opacity of the words. Keep an eye out, in
-				// case this becomes a problem.
-				// For now, keep it as it adds a cool effect.
-				textArea.setFont(new Font("Arial", fontSize, fontSize));
-			}
-		}
-
 		// @formatter:off
 		switch (e.getActionCommand()) {
 			case "New":
