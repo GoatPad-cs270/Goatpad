@@ -20,6 +20,8 @@ public class dropdown extends JComboBox {
 		this.addItem("Save");
 		this.addItem("Undo");
 		this.addItem("Redo");
+		this.addItem("Zoom In");
+		this.addItem("Zoom Out");
 
 	}
 

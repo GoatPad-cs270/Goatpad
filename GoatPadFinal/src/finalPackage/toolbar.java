@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -20,7 +21,9 @@ public class toolbar {
 
 	public boolean undo = false;
 
-	String undoString = "";
+	// For the sake of optimization, consider changing ArrayList of Strings to an
+	// ArrayList of Characters.
+	ArrayList<String> undoStrings = new ArrayList<String>();
 
 	public dropdown file = new dropdown();
 
@@ -182,7 +185,8 @@ public class toolbar {
 			return null;
 		} else {
 			undo = true;
-			undoString = doc.inputs.remove(doc.inputs.size() - 1);
+			undoStrings.add(doc.inputs.remove(doc.inputs.size() - 1));
+
 			doc.content = "";
 			for (String input : doc.inputs) {
 				doc.content += input;
@@ -205,14 +209,13 @@ public class toolbar {
 	 * @return
 	 */
 	public String redo(Document doc) {
-		if (undo == true) {
-			doc.inputs.add(undoString);
+		if (undo == true && !undoStrings.isEmpty()) {
+			doc.inputs.add(undoStrings.remove(undoStrings.size() - 1));
 			doc.content = "";
 
 			for (String input : doc.inputs) {
 				doc.content += input;
 			}
-			undoString = "";
 
 		}
 		return doc.content;
