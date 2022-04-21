@@ -1,13 +1,22 @@
 package finalPackage;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class dropdown extends JComboBox {
 
 	// This is meant to test the names of the dropdown menu
 	public String names;
+	JFrame window;
+	JMenuBar menuBar;
+	JMenu menuFile, menuEdit;
+	JMenuItem iTranslateToEnglish, iTranslateToGoat, iCut, iCopy, iPaste, iImport, iExport, iPrint, iOpen,iSave,iUndo,iRedo;
 
 	public dropdown() {
+
 		this.addItem("Translate To English");
 		this.addItem("Translate To Goat");
 		this.addItem("Cut");

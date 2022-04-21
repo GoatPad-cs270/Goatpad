@@ -11,10 +11,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -34,7 +39,13 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	Document doc = new Document();
 	toolbar toolbar = new toolbar();
 	Clipboard clipboard = getToolkit().getSystemClipboard();
-	JTextArea textArea = new JTextArea();
+	JTextArea textArea;
+	JFrame window;
+	JScrollPane scrollPane;
+	JMenuBar menuBar;
+	JMenu menuFile, menuEdit, menuTranslate;
+	JMenuItem iTranslateToEnglish, iTranslateToGoat, iCut, iCopy, iPaste, iImport, iExport, iPrint, iOpen,iSave,iUndo,iRedo;
+
 
 	JPanel statusBar = new JPanel();
 	JLabel status = new JLabel();
@@ -47,12 +58,18 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	public DisplayPanel(int width, int height, Color c) {
 		this.setPreferredSize(new Dimension(width, height));
 		this.setBackground(c);
-		setTitle("LLGSHH-Pad");
+		createWindow();
+		createTextArea();
+		createMenuBar();
+		createFileMenu();
+		createEditMenu();
+		createTranslateMenu();		
 
 		textArea.getDocument().addDocumentListener(this);
 		textArea.setBounds(2, 40, width, height);
 
 		drop.addActionListener(this);
+		
 
 		// Creates a status bar which has line and column number of the current caret
 		// location
@@ -64,13 +81,9 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		status.setText("Line:  Col: ");
 		this.wordWrapOnOff(wordWrapOn);
 
-		this.add(drop);
-		this.add(textArea);
+		//window.add(drop);
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.setSize(width, height);
-		this.setVisible(true);
+		window.setVisible(true);
 
 		// Creates a listener that listens to movement by the caret
 		textArea.addCaretListener(new CaretListener() {
@@ -101,12 +114,120 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	public dropdown getDropDown() {
 		return drop;
 	}
+	public void createTextArea() {
+		textArea = new JTextArea();
+		window.add(textArea);
+		scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		window.add(scrollPane);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+	}
+	public void createWindow() {
+		window = new JFrame("LLGSHH-PAD");
+		window.setSize(800,600);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	public void createMenuBar() {
+		menuBar = new JMenuBar();
+		window.setJMenuBar(menuBar);
+		menuFile = new JMenu("File");
+		menuBar.add(menuFile);
+		menuEdit = new JMenu("Edit");
+		menuBar.add(menuEdit);
+		menuTranslate = new JMenu("Translate");
+		menuBar.add(menuTranslate);
+	}
+	public void createFileMenu() {
+		iImport = new JMenuItem("Import");
+		iImport.addActionListener(this);
+		iImport.setActionCommand("Import");
+		menuFile.add(iImport);	
+		
+		iExport = new JMenuItem("Export");
+		iExport.addActionListener(this);
+		iExport.setActionCommand("Export");
+		menuFile.add(iExport);	
+		
+		iPrint = new JMenuItem("Print");
+		iPrint.addActionListener(this);
+		iPrint.setActionCommand("Print");
+		menuFile.add(iPrint);
+		
+		iOpen = new JMenuItem("Open");
+		iOpen.addActionListener(this);
+		iOpen.setActionCommand("Open");
+		menuFile.add(iOpen);
+		
+		iSave = new JMenuItem("Save");
+		iSave.addActionListener(this);
+		iSave.setActionCommand("Save");
+		menuFile.add(iSave);
+
+	}
+	public void createEditMenu() {
+		iCut = new JMenuItem("Cut");
+		iCut.addActionListener(this);
+		iCut.setActionCommand("Cut");
+		menuEdit.add(iCut);
+		
+		iCopy = new JMenuItem("Copy");
+		iCopy.addActionListener(this);
+		iCopy.setActionCommand("Copy");
+		menuEdit.add(iCopy);	
+		
+		iPaste = new JMenuItem("Paste");
+		iPaste.addActionListener(this);
+		iPaste.setActionCommand("Paste");
+		menuEdit.add(iPaste);
+		
+		iUndo = new JMenuItem("Undo");
+		iUndo.addActionListener(this);
+		iUndo.setActionCommand("Undo");
+		menuEdit.add(iUndo);
+		
+		iRedo = new JMenuItem("Redo");
+		iRedo.addActionListener(this);
+		iRedo.setActionCommand("Redo");
+		menuEdit.add(iRedo);
+	}
+	public void createTranslateMenu() {
+		iTranslateToEnglish = new JMenuItem("Translate to English");
+		iTranslateToEnglish.addActionListener(this);
+		iTranslateToEnglish.setActionCommand("Translate to English");
+		menuTranslate.add(iTranslateToEnglish);	
+		
+		iTranslateToGoat = new JMenuItem("Translate to Goat");
+		iTranslateToGoat.addActionListener(this);
+		iTranslateToGoat.setActionCommand("Translate to Goat");
+		menuTranslate.add(iTranslateToGoat);	
+	}
 
 	// Calls functions to do the indicated features
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == drop) {
-			if (drop.getSelectedItem() == "Import") {
+		String command = e.getActionCommand();
+		
+		switch(command) {
+		//FILE OPTIONS
+		case "Import": System.out.println("Import Clicked"); break;
+		case "Export": System.out.println("Export Clicked"); break;
+		case "Print": System.out.println("Print Clicked"); break;
+		case "Open": textArea.append(toolbar.openFile(textArea)); System.out.println("Open Clicked"); break;
+		case "Save": toolbar.saveFile(textArea); System.out.println("Save Clicked"); break;
+		// EDIT OPTIONS
+		case "Cut": textArea.cut(); System.out.println("Cut Clicked"); break;
+		case "Copy": textArea.copy(); System.out.println("Copy Clicked"); break;
+		case "Paste": textArea.paste(); System.out.println("Paste Clicked"); break;
+		case "Undo":toolbar.undo(doc); textArea.setText(doc.content); System.out.println("Undo Clicked"); break;
+		case "Redo":toolbar.redo(doc);textArea.setText(doc.content); System.out.println("Redo Clicked"); break;
+		// TRANSLATE OPTIONS
+		case "Translate to English":String text = textArea.getText(); textArea.setText(""); textArea.append(doc.translateTextToEnglish(text)); System.out.println("Translate to English Clicked"); break;
+		case "Translate to Goat": String text1 = textArea.getText(); textArea.setText(""); textArea.append(doc.translateTextToGoat(text1)); System.out.println("Translate to Goat Clicked"); break;
+
+		
+		}
+		
+		if (e.getSource() == menuBar) {
+			if (drop.getSelectedItem()== "Import") {
 				System.out.println(drop.getSelectedItem());
 			}
 			if (drop.getSelectedItem() == "Export") {
