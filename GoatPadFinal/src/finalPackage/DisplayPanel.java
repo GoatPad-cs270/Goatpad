@@ -32,6 +32,7 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.text.BadLocationException;
 
 //Consider making hotkeys for undo and redo
+//Joe Comment
 
 public class DisplayPanel extends JFrame implements MouseInputListener, KeyListener, DocumentListener, ActionListener {
 
@@ -88,6 +89,8 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	public DisplayPanel(int width, int height) {
 		this.setPreferredSize(new Dimension(width, height));
 
+		this.setBackground(c);
+
 		setTitle("LLGSHH-Pad");
 
 		textArea.getDocument().addDocumentListener(this);
@@ -104,6 +107,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		statusBar.setBackground(Color.LIGHT_GRAY);
 		status.setText("Line:  Col: ");
 		this.wordWrapOnOff(wordWrapOn);
+
 
 		this.setJMenuBar(menuBar);
 		// Instantiation of different Menus
@@ -278,6 +282,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				toolbar.undo(doc);
 				textArea.setText(doc.content);
 			}
+
 			if (drop.getSelectedItem() == "Zoom In") {
 				System.out.println(drop.getSelectedItem());
 				fontSize += 2;
