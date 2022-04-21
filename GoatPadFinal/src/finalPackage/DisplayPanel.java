@@ -184,8 +184,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		zoomOut.addActionListener(this);
 		zoomOut.setActionCommand("Zoom Out");
 
-//		this.add(drop);
-
 		this.add(textArea);
 		// Creates a listener that listens to movement by the caret
 		textArea.addCaretListener(new CaretListener() {
@@ -279,9 +277,12 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				textArea.setFont(new Font("Arial", fontSize, fontSize));
 				break;
 			case "Zoom Out":
-				fontSize -= 2;
-				textArea.setFont(new Font("Arial", fontSize, fontSize));
-				break;
+				if(fontSize <= 0) {
+					fontSize = 0;
+					fontSize -= 2;
+					textArea.setFont(new Font("Arial", fontSize, fontSize));
+					break;
+				}
 			}
 		// @formatter:on
 
