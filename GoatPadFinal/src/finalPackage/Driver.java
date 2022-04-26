@@ -6,7 +6,7 @@ public class Driver {
 
 	public static void main(String[] args) {
 		// translateTests();
-		display = new DisplayPanel(1000, 1000);
+		display = new DisplayPanel(900, 700);
 
 	}
 
