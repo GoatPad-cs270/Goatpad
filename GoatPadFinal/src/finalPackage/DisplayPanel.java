@@ -256,7 +256,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				toolbar.saveFile(textArea);
 				break;
 			case "Open":
-				textArea.append(toolbar.openFile(textArea));
+				toolbar.openFile(textArea);
 				break;
 			case "Export":
 				// Export function
