@@ -103,7 +103,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	public DisplayPanel(int width, int height) {
 		this.setPreferredSize(new Dimension(width, height));
 
-		createWindow();
+		createWindow(width, height);
 		createTextArea();
 
 		textArea.getDocument().addDocumentListener(this);
@@ -239,9 +239,9 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 	}
 
-	public void createWindow() {
+	public void createWindow(int width, int height) {
 		window = new JFrame("LLGSHH-PAD");
-		window.setSize(800, 600);
+		window.setSize(width, height);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
@@ -259,7 +259,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				toolbar.saveFile(textArea);
 				break;
 			case "Open":
-				textArea.append(toolbar.openFile(textArea));
+				toolbar.openFile(textArea);
 				break;
 			case "Export":
 				// Export function
