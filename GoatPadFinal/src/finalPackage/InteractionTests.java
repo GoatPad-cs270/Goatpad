@@ -142,7 +142,7 @@ public class InteractionTests {
 		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
 
 		englishWord = "The quick brown fox jumps over the lazy dog";
-		goatWord = "RWwbba/raryawaaya/brrarwwby/bbarwy/bwryaybrrb/aryrbarr/rwwbba/ybaywyy/abarwa";
+		goatWord = "RWwbba/raryawaaya/b,rrarwwby/bbarwy/bwryaybrrb/aryrbarr/rwwbba/yba,ywyy/abarwa";
 
 		assertEquals(goatWord, toolbar.translateToGoat(englishWord));
 

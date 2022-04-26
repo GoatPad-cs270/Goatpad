@@ -11,6 +11,18 @@ public class Document {
 	String currentInput;
 
 	/**
+	 * Keeps track of whether the current language of the Document's content is in
+	 * goat English or Human English
+	 */
+	boolean contentIsGoatEnglish;
+
+	/**
+	 * Keeps track of whether the translation methods have been used once before or
+	 * not.
+	 */
+	boolean wasTranslated;
+
+	/**
 	 * Contains all the content (words, spaces, etc.) of the Document as a String
 	 */
 	String content = "";
@@ -141,7 +153,18 @@ public class Document {
 	 * @return
 	 */
 	public String translateTextToGoat(String content) {
-		return toolbar.translateToGoat(content);
+		if (!wasTranslated) {
+			wasTranslated = true;
+			contentIsGoatEnglish = true;
+			return toolbar.translateToGoat(content);
+		}
+
+		if (!this.contentIsGoatEnglish) {
+			contentIsGoatEnglish = true;
+			return toolbar.translateToGoat(content);
+		} else {
+			return content;
+		}
 	}
 
 	/**
@@ -151,7 +174,18 @@ public class Document {
 	 * @return
 	 */
 	public String translateTextToEnglish(String content) {
-		return toolbar.translateToEnglish(content);
+		if (!wasTranslated) {
+			wasTranslated = true;
+			contentIsGoatEnglish = false;
+			return toolbar.translateToEnglish(content);
+		}
+
+		if (this.contentIsGoatEnglish) {
+			contentIsGoatEnglish = false;
+			return toolbar.translateToEnglish(content);
+		} else {
+			return content;
+		}
 	}
 
 	/**
