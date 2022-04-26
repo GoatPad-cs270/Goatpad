@@ -48,7 +48,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	// Menu bar containing menus (e.g. File, Edit, etc.)
 	JMenuBar menuBar = new JMenuBar();
-
+  //h
 	// Menus contained within the menu bar
 	JMenu fileMenu = new JMenu();
 	JMenu editMenu = new JMenu();
