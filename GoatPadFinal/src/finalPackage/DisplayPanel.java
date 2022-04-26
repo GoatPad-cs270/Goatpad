@@ -1,6 +1,7 @@
 package finalPackage;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -13,14 +14,17 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -30,6 +34,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.MouseInputListener;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
+import javax.swing.text.JTextComponent;
+
 
 //Consider making hotkeys for undo and redo
 //Joe Comment
@@ -40,11 +48,11 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	toolbar toolbar = new toolbar();
 	Clipboard clipboard = getToolkit().getSystemClipboard();
 	JTextArea textArea;
-	JFrame window;
+	JFrame window, searchWindow;
 	JScrollPane scrollPane;
 	JMenuBar menuBar;
 	JMenu menuFile, menuEdit, menuTranslate;
-	JMenuItem iTranslateToEnglish, iTranslateToGoat, iCut, iCopy, iPaste, iImport, iExport, iPrint, iOpen,iSave,iUndo,iRedo;
+	JMenuItem iSearch, iTranslateToEnglish, iTranslateToGoat, iCut, iCopy, iPaste, iImport, iExport, iPrint, iOpen,iSave,iUndo,iRedo;
 
 
 	JPanel statusBar = new JPanel();
@@ -63,7 +71,8 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		createMenuBar();
 		createFileMenu();
 		createEditMenu();
-		createTranslateMenu();		
+		createTranslateMenu();
+
 
 		textArea.getDocument().addDocumentListener(this);
 		textArea.setBounds(2, 40, width, height);
@@ -116,7 +125,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	}
 	public void createTextArea() {
 		textArea = new JTextArea();
-		window.add(textArea);
+ 		window.add(textArea);
 		scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		window.add(scrollPane);
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -188,6 +197,11 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		iRedo.addActionListener(this);
 		iRedo.setActionCommand("Redo");
 		menuEdit.add(iRedo);
+		
+		iSearch = new JMenuItem("Search");
+		iSearch.addActionListener(this);
+		iSearch.setActionCommand("Search");
+		menuEdit.add(iSearch);
 	}
 	public void createTranslateMenu() {
 		iTranslateToEnglish = new JMenuItem("Translate to English");
@@ -219,6 +233,11 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		case "Paste": textArea.paste(); System.out.println("Paste Clicked"); break;
 		case "Undo":toolbar.undo(doc); textArea.setText(doc.content); System.out.println("Undo Clicked"); break;
 		case "Redo":toolbar.redo(doc);textArea.setText(doc.content); System.out.println("Redo Clicked"); break;
+		case "Search": String search = JOptionPane.showInputDialog("What are you looking for?");
+		if((search !=null) && (search.length()>0)){
+			System.out.println("Searching");
+			searchTextArea(textArea, search);
+		}; break;
 		// TRANSLATE OPTIONS
 		case "Translate to English":String text = textArea.getText(); textArea.setText(""); textArea.append(doc.translateTextToEnglish(text)); System.out.println("Translate to English Clicked"); break;
 		case "Translate to Goat": String text1 = textArea.getText(); textArea.setText(""); textArea.append(doc.translateTextToGoat(text1)); System.out.println("Translate to Goat Clicked"); break;
@@ -423,6 +442,41 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			Pos p = new Pos(startIndex + 1, endCaretPos);
 			return p;
 		}
+	}
+	
+	class myHighligher extends DefaultHighlighter.DefaultHighlightPainter{
+		public myHighligher(Color color) {
+			super(color);
+		}
+	}
+	
+	public void removeHighlight(JTextComponent textComp) {
+		Highlighter removeHighlighter = textComp.getHighlighter();
+		Highlighter.Highlight[] remove = removeHighlighter.getHighlights();
+		
+		for(int i =0; i<remove.length;i++) {
+			if(remove[i].getPainter() instanceof myHighligher) {
+				removeHighlighter.removeHighlight(remove[i]);
+			}
+		}
+	}
+	DefaultHighlighter.HighlightPainter highlighter = new myHighligher(Color.yellow);
+	private void searchTextArea(JTextComponent textComp, String textString) {
+		removeHighlight(textComp);
+		try {
+			Highlighter hilight = textComp.getHighlighter();
+			javax.swing.text.Document doc = textComp.getDocument();
+			String text = doc.getText(0, doc.getLength());
+			int pos =0;
+			while((pos = text.toUpperCase().indexOf(textString.toUpperCase(),pos)) >= 0);{
+				hilight.addHighlight(pos, pos+textString.length(), highlighter);
+				pos += textString.length();
+			}
+			
+		}catch (Exception e) {
+			
+		}
+		
 	}
 
 	/**

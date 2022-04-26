@@ -114,6 +114,19 @@ public class InteractionTests {
 		int lastCount = (int) lastStr.chars().count();
 		assert (lastCount < display.getWidth());
 	}
+	public void checkCutCopyPaste() {
+		Document doc = new Document();
+		doc.setContents("Hello");
+		String copy = "Hello";
+		String cut = "Hello";
+		boolean paste = true;
+		assertEquals(cut,doc.content);
+		assertEquals(copy,doc.copiedContent);
+		assertEquals(copy,paste);
+		assertEquals(cut,paste);
+
+		
+	}
 
 	/**
 	 * Tests translation from English to Goat as well as the private
