@@ -173,7 +173,7 @@ public class toolbar {
 	}
 
 	/**
-	 * undoes the previous single KEYSTROKE action
+	 * Undoes the previous single KEYSTROKE action
 	 * 
 	 * @param lastAction
 	 * @return
@@ -196,12 +196,6 @@ public class toolbar {
 
 	}
 
-	/**
-	 * Redo's the most recent UNDO performed on the document
-	 * 
-	 * @param doc
-	 * @return
-	 */
 	/**
 	 * Redo's the most recent UNDO performed on the document
 	 * 
@@ -256,6 +250,12 @@ public class toolbar {
 		temp = Character.toLowerCase(temp);
 
 		switch (temp) {
+		case 'a':
+			returnVal = "a,";
+			break;
+		case 'b':
+			returnVal = "b,";
+			break;
 		case 'c':
 			returnVal = "aa";
 			break;
@@ -331,6 +331,8 @@ public class toolbar {
 		case ' ':
 			returnVal = "/";
 			break;
+		default:
+			returnVal = Character.toString(temp);
 		}
 
 		if (isLower) {
@@ -423,8 +425,9 @@ public class toolbar {
 			} else if (temp2 == 'w') {
 				returnVal = 'i';
 				setHasPartner(true);
-			} else {
+			} else if (temp2 == ',') {
 				returnVal = 'a';
+				setHasPartner(true);
 			}
 			break;
 		case 'b':
@@ -443,13 +446,18 @@ public class toolbar {
 			} else if (temp2 == 'r') {
 				returnVal = 'p';
 				setHasPartner(true);
-			} else {
+			} else if (temp2 == ',') {
 				returnVal = 'b';
+				setHasPartner(true);
 			}
 			break;
 		case '/':
 			returnVal = ' ';
 			break;
+		case ',':
+			returnVal = ',';
+		default:
+			returnVal = temp;
 		}
 
 		if (isLower) {

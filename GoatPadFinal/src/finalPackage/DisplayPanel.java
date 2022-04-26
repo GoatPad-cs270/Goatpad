@@ -2,16 +2,21 @@ package finalPackage;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,6 +41,11 @@ import javax.swing.text.BadLocationException;
 
 public class DisplayPanel extends JFrame implements MouseInputListener, KeyListener, DocumentListener, ActionListener {
 
+	/**
+	 * Allows for the setting up of the printing component/UI
+	 */
+	PrinterJob printer;
+
 	// Menu bar containing menus (e.g. File, Edit, etc.)
 	JMenuBar menuBar = new JMenuBar();
 
@@ -49,6 +59,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	// Menu items contained within the menus
 
 	// File menu items
+	JMenuItem newItem = new JMenuItem("New");
 	JMenuItem open = new JMenuItem("Open");
 	JMenuItem importItem = new JMenuItem("Import");
 	JMenuItem export = new JMenuItem("Export");
@@ -74,14 +85,17 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	toolbar toolbar = new toolbar();
 	Clipboard clipboard = getToolkit().getSystemClipboard();
 	JTextArea textArea = new JTextArea();
-	int fontSize = 12;
-	Font font = new Font("Arial", fontSize, fontSize);
+
+	static final int DEFAULT_FONT_SIZE = 12;
+	static final Font DEFAULT_FONT = new Font("Arial", DEFAULT_FONT_SIZE, DEFAULT_FONT_SIZE);
+
+	int fontSize = DEFAULT_FONT_SIZE;
 
 	JPanel statusBar = new JPanel();
 	JLabel status = new JLabel();
-	JScrollPane scrollPane;
 
-	dropdown drop = new dropdown();
+	JFrame window, searchWindow;
+	JScrollPane scrollPane;
 
 	boolean wordWrapOn = true;
 	int currentLine, currentCol;
@@ -89,13 +103,10 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	public DisplayPanel(int width, int height) {
 		this.setPreferredSize(new Dimension(width, height));
 
-
-		setTitle("LLGSHH-Pad");
+		createWindow();
+		createTextArea();
 
 		textArea.getDocument().addDocumentListener(this);
-		textArea.setBounds(2, 40, width, height);
-
-		drop.addActionListener(this);
 
 		// Creates a status bar which has line and column number of the current caret
 		// location
@@ -108,13 +119,15 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		this.wordWrapOnOff(wordWrapOn);
 
 
-		this.setJMenuBar(menuBar);
+		window.setJMenuBar(menuBar);
+    
 		// Instantiation of different Menus
 		fileMenu = new JMenu("File");
 		editMenu = new JMenu("Edit");
 		formatMenu = new JMenu("Format");
 		viewMenu = new JMenu("View");
 
+		// Testing
 		// Addition of Menus to Menu Bar
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
@@ -124,11 +137,13 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		// Assignment of Menu items to appropriate Menus
 
 		// FileMenu
+		fileMenu.add(newItem);
 		fileMenu.add(save);
 		fileMenu.add(open);
-		fileMenu.add(export);
-		fileMenu.add(importItem);
 		fileMenu.add(print);
+
+		newItem.addActionListener(this);
+		newItem.setActionCommand("New");
 
 		save.addActionListener(this);
 		save.setActionCommand("Save");
@@ -187,14 +202,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		zoomOut.addActionListener(this);
 		zoomOut.setActionCommand("Zoom Out");
 
-		this.add(drop);
-		this.add(textArea);
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.setSize(width, height);
-		this.setVisible(true);
-
+		window.setVisible(true);
 		// Creates a listener that listens to movement by the caret
 		textArea.addCaretListener(new CaretListener() {
 
@@ -215,90 +223,38 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				updateLineAndCol(lineNum, columnNum);
 			}
 		});
+
 	}
 
 	protected void paintComponent(Graphics g) {
 
 	}
 
-	public dropdown getDropDown() {
-		return drop;
+	public void createTextArea() {
+		textArea = new JTextArea();
+		window.add(textArea);
+		scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		window.add(scrollPane);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+	}
+
+	public void createWindow() {
+		window = new JFrame("LLGSHH-PAD");
+		window.setSize(800, 600);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	}
 
 	// Calls functions to do the indicated features
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == drop) {
-			if (drop.getSelectedItem() == "Import") {
-				System.out.println(drop.getSelectedItem());
-			}
-			if (drop.getSelectedItem() == "Export") {
-				System.out.println(drop.getSelectedItem());
-			}
-			if (drop.getSelectedItem() == "Print") {
-				System.out.println(drop.getSelectedItem());
-			}
-			if (drop.getSelectedItem() == "Cut") {
-				System.out.println(drop.getSelectedItem());
-				textArea.cut();
-			}
-			if (drop.getSelectedItem() == "Copy") {
-				System.out.println(drop.getSelectedItem());
-				textArea.copy();
-			}
-			if (drop.getSelectedItem() == "Paste") {
-				System.out.println(drop.getSelectedItem());
-				textArea.paste();
-			}
-
-			if (drop.getSelectedItem() == "Open") {
-				System.out.println(drop.getSelectedItem());
-				textArea.append(toolbar.openFile(textArea));
-			}
-			if (drop.getSelectedItem() == "Save") {
-				System.out.println(drop.getSelectedItem());
-				toolbar.saveFile(textArea);
-			}
-			if (drop.getSelectedItem() == "Translate To English") {
-				System.out.println(drop.getSelectedItem());
-				String text = textArea.getText();
-				textArea.setText("");
-				textArea.append(doc.translateTextToEnglish(text));
-			}
-			if (drop.getSelectedItem() == "Translate To Goat") {
-				System.out.println(drop.getSelectedItem());
-				String text = textArea.getText();
-				textArea.setText("");
-				textArea.append(doc.translateTextToGoat(text));
-			}
-			if (drop.getSelectedItem() == "Redo") {
-				System.out.println(drop.getSelectedItem());
-				toolbar.redo(doc);
-				textArea.setText(doc.content);
-			}
-			if (drop.getSelectedItem() == "Undo") {
-				System.out.println(drop.getSelectedItem());
-				toolbar.undo(doc);
-				textArea.setText(doc.content);
-			}
-
-			if (drop.getSelectedItem() == "Zoom In") {
-				System.out.println(drop.getSelectedItem());
-				fontSize += 2;
-				textArea.setFont(new Font("Arial", fontSize, fontSize));
-			}
-			if (drop.getSelectedItem() == "Zoom Out") {
-				System.out.println(drop.getSelectedItem());
-				fontSize -= 2;
-				// This will simultaneously change the opacity of the words. Keep an eye out, in
-				// case this becomes a problem.
-				// For now, keep it as it adds a cool effect.
-				textArea.setFont(new Font("Arial", fontSize, fontSize));
-			}
-		}
-
 		// @formatter:off
 		switch (e.getActionCommand()) {
+			case "New":
+				doc.content = "";
+				textArea.setText(doc.content);
+				break;
 			case "Save":
 				toolbar.saveFile(textArea);
 				break;
@@ -312,7 +268,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				// Import function
 				break;
 			case "Print":
-				// Print function
+				print();
 				break;
 			case "Undo":
 				toolbar.undo(doc);
@@ -332,22 +288,16 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				textArea.paste();
 				break;
 			case "Translate to Goat":
-				String text = textArea.getText();
-				textArea.setText("");
-				textArea.append(doc.translateTextToGoat(text));
+				translateToGoat();
 				break;
 			case "Translate to English":
-				text = textArea.getText();
-				textArea.setText("");
-				textArea.append(doc.translateTextToEnglish(text));
+				translateToEnglish();
 				break;
 			case "Zoom In":
-				fontSize += 2;
-				textArea.setFont(new Font("Arial", fontSize, fontSize));
+				zoomIn();
 				break;
 			case "Zoom Out":
-				fontSize -= 2;
-				textArea.setFont(new Font("Arial", fontSize, fontSize));
+				zoomOut();
 				break;
 			}
 		// @formatter:on
@@ -515,4 +465,53 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		}
 	}
 
+	public void print() {
+		printer = PrinterJob.getPrinterJob();
+		printer.setJobName(" Print Component ");
+
+		printer.setPrintable(new Printable() {
+			public int print(Graphics pg, PageFormat pf, int pageNum) {
+				if (pageNum > 0)
+					return Printable.NO_SUCH_PAGE;
+
+				Graphics2D g = (Graphics2D) pg;
+				g.translate(pf.getImageableX(), pf.getImageableY());
+				paintComponent(g);
+				return Printable.PAGE_EXISTS;
+			}
+		});
+
+		if (printer.printDialog() == false)
+			return;
+
+		try {
+			printer.print(); // This out to work
+		} catch (PrinterException ex) {
+			System.err.println("Printing problem!");
+		}
+	}
+
+	public void translateToGoat() {
+		String text = textArea.getText();
+		textArea.setText("");
+		textArea.append(doc.translateTextToGoat(text));
+	}
+
+	public void translateToEnglish() {
+		String text = textArea.getText();
+		textArea.setText("");
+		textArea.append(doc.translateTextToEnglish(text));
+	}
+
+	public void zoomIn() {
+		fontSize += 2;
+		textArea.setFont(new Font("Arial", fontSize, fontSize));
+	}
+
+	public void zoomOut() {
+		if (fontSize > 0) {
+			fontSize -= 2;
+			textArea.setFont(new Font("Arial", fontSize, fontSize));
+		}
+	}
 }
