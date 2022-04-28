@@ -1,5 +1,6 @@
 package finalPackage;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -26,9 +27,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
@@ -48,7 +51,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	// Menu bar containing menus (e.g. File, Edit, etc.)
 	JMenuBar menuBar = new JMenuBar();
-
+  //h
 	// Menus contained within the menu bar
 	JMenu fileMenu = new JMenu();
 	JMenu editMenu = new JMenu();
@@ -93,7 +96,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	int fontSize = DEFAULT_FONT_SIZE;
 
 	JPanel statusBar = new JPanel();
-	JLabel status = new JLabel();
+	JLabel statusLabel = new JLabel();
 
 	JFrame window, searchWindow;
 	JScrollPane scrollPane;
@@ -106,18 +109,13 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 		createWindow(width, height);
 		createTextArea();
+		createStatusBar();
 
 		textArea.getDocument().addDocumentListener(this);
 
 		// Creates a status bar which has line and column number of the current caret
 		// location
-		statusBar.setBorder(new CompoundBorder(new LineBorder(Color.DARK_GRAY), new EmptyBorder(4, 4, 4, 4)));
-		statusBar.setPreferredSize(new Dimension(width, 40));
-		statusBar.setLayout(new BoxLayout(statusBar, BoxLayout.X_AXIS));
-		statusBar.add(status);
-		statusBar.setBackground(Color.LIGHT_GRAY);
-		status.setText("Line:  Col: ");
-		this.wordWrapOnOff(wordWrapOn);
+		
 
 
 		window.setJMenuBar(menuBar);
@@ -246,9 +244,21 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 	public void createWindow(int width, int height) {
 		window = new JFrame("LLGSHH-PAD");
+		window.setLayout(new BorderLayout());
 		window.setSize(width, height);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+	}
+
+	//create status bar at the bottom of the jframe.
+	public void createStatusBar(){
+		statusBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		window.add(statusBar, BorderLayout.SOUTH);
+		statusBar.setPreferredSize(new Dimension(window.getWidth(), 16));
+		statusBar.setLayout(new BoxLayout(statusBar, BoxLayout.X_AXIS));
+		statusLabel = new JLabel("Line: 1 Column: 0");
+		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		statusBar.add(statusLabel);
 	}
 
 	// Calls functions to do the indicated features
@@ -429,7 +439,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	 * @param columnNum
 	 */
 	private void updateLineAndCol(int lineNum, int columnNum) {
-		status.setText("Line: " + lineNum + " Column: " + columnNum);
+		statusLabel.setText("Line: " + lineNum + " Column: " + columnNum);
 		currentLine = lineNum;
 		currentCol = columnNum;
 	}
