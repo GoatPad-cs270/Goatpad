@@ -22,6 +22,7 @@ public class dropdown extends JComboBox {
 		this.addItem("Redo");
 		this.addItem("Zoom In");
 		this.addItem("Zoom Out");
+		this.addItem("Word Wrap");
 
 	}
 
