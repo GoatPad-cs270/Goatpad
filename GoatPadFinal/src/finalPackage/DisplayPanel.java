@@ -87,6 +87,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	// Format menu items
 	JMenuItem goTranslate = new JMenuItem("Translate to Goat");
 	JMenuItem enTranslate = new JMenuItem("Translate to English");
+	JMenuItem wordWrap = new JMenuItem("Word Wrap");
 
 	// View menu items
 	JMenuItem zoomIn = new JMenuItem("Zoom In");
@@ -198,12 +199,16 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		// FormatMenu
 		formatMenu.add(goTranslate);
 		formatMenu.add(enTranslate);
+		formatMenu.add(wordWrap);
 
 		goTranslate.addActionListener(this);
 		goTranslate.setActionCommand("Translate to Goat");
 
 		enTranslate.addActionListener(this);
 		enTranslate.setActionCommand("Translate to English");
+
+		wordWrap.addActionListener(this);
+		enTranslate.setActionCommand("Word Wrap");
 
 		// ViewMenu
 		viewMenu.add(zoomIn);
@@ -326,6 +331,10 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 				break;
 			case "Find":
 				search();
+
+			case "Word Wrap":
+				wordWrapOnOff(wordWrapOn);
+ main
 				break;
 			}
 		// @formatter:on
