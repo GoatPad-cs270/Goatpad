@@ -16,17 +16,21 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.Popup;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -36,8 +40,12 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
+import javax.swing.plaf.basic.BasicDesktopIconUI.MouseInputHandler;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter.HighlightPainter;
 
 //Consider making hotkeys for undo and redo
 //Joe Comment
@@ -84,6 +92,7 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	// View menu items
 	JMenuItem zoomIn = new JMenuItem("Zoom In");
 	JMenuItem zoomOut = new JMenuItem("Zoom Out");
+	JMenuItem find = new JMenuItem("Find");
 
 	Document doc = new Document();
 	toolbar toolbar = new toolbar();
@@ -159,12 +168,15 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 		print.addActionListener(this);
 		print.setActionCommand("Print");
 
+		
+
 		// EditMenu
 		editMenu.add(undo);
 		editMenu.add(redo);
 		editMenu.add(cut);
 		editMenu.add(copy);
 		editMenu.add(paste);
+		editMenu.add(find);
 
 		undo.addActionListener(this);
 		undo.setActionCommand("Undo");
@@ -180,6 +192,9 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 		paste.addActionListener(this);
 		paste.setActionCommand("Paste");
+
+		find.addActionListener(this);
+		find.setActionCommand("Find");
 
 		// FormatMenu
 		formatMenu.add(goTranslate);
@@ -314,8 +329,12 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 			case "Zoom Out":
 				zoomOut();
 				break;
+			case "Find":
+				search();
+
 			case "Word Wrap":
 				wordWrapOnOff(wordWrapOn);
+ main
 				break;
 			}
 		// @formatter:on
@@ -451,9 +470,35 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 	 * @param str
 	 * @return
 	 */
-	public Pos search(String str) {
+	public Pos search() {
+		JFrame jFrame = new JFrame();
+		JButton jbt_next = new JButton("Next");
+		jbt_next.addMouseListener(new MouseInputAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("Next was Clicked");
+			}
+		});
+		JButton jbt_prev = new JButton("Previous");
+		JButton jbt_canc = new JButton("Cancel");
+		JButton[] buttons = {jbt_next, jbt_prev, jbt_canc};
+		String str = JOptionPane.showInputDialog(jFrame, "Enter your message", "Find", JOptionPane.INFORMATION_MESSAGE);
+		System.out.println(str);
+		JOptionPane.showInternalOptionDialog(null, "Find", "okay", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, buttons, buttons[0]);
+        ArrayList<Object> list = new ArrayList<Object>();
+		for (int i = 0; i < textArea.getText().length(); i++) {
+			if (textArea.getText().charAt(i) == str.charAt(0)) {
+				if (textArea.getText().substring(i, i + str.length()).equals(str)) {
+					list.add(i);
+				}
+			}
+		}
+		System.out.println("Here");
+
+		
 
 		int startIndex = textArea.getText().indexOf(str);
+		System.out.println(startIndex);
 		if (startIndex == -1) {
 			System.out.println("The given string is not found!");
 			return null;
@@ -461,9 +506,11 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 		else {
 			int endCaretPos = startIndex + str.length();
+			textArea.select(startIndex, endCaretPos);
 			Pos p = new Pos(startIndex + 1, endCaretPos);
 			return p;
 		}
+		
 	}
 
 	/**
