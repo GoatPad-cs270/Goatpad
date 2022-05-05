@@ -334,7 +334,6 @@ public class DisplayPanel extends JFrame implements MouseInputListener, KeyListe
 
 			case "Word Wrap":
 				wordWrapOnOff(wordWrapOn);
- main
 				break;
 			}
 		// @formatter:on
