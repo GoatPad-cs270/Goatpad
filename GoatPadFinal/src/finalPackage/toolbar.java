@@ -59,16 +59,23 @@ public class toolbar {
 	public void saveFile(JTextArea text) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File("."));
+		//set it to be a save dialog
+ 		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+ 		//set a default filename (this is where you default extension first comes in)
+  		fileChooser.setSelectedFile(new File("myfile.txt"));
+		 //Set an extension filter, so the user sees other XML files
+  		fileChooser.setFileFilter(new FileNameExtensionFilter("txt file","txt"));
 
 		response = fileChooser.showSaveDialog(null);
 
 		if (response == JFileChooser.APPROVE_OPTION) {
-			File file;
 			PrintWriter fileOut = null;
 
-			file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+			String filename = fileChooser.getSelectedFile().toString();
+    		if (!filename .endsWith(".txt"))
+        		filename += ".txt";
 			try {
-				fileOut = new PrintWriter(file);
+				fileOut = new PrintWriter(filename);
 				fileOut.println(text.getText());
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
